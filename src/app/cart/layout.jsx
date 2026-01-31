@@ -1,0 +1,52 @@
+import { Geist, Geist_Mono } from "next/font/google";
+import "@/app/globals.css";
+
+// My Components
+import StoreNavBar from "@/components/StoreComponents/NavComp/StoreNavBar";
+import UserSync from "@/components/StoreComponents/UserSync";
+
+// Utils
+import { auth } from "@/lib/auth";
+
+// Shadcn Comp
+import { Toaster } from "@/components/ui/sonner";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata = {
+  title: {
+    default: "Web Store",
+    template: " %s | Web Store",
+  },
+  description: "An Ecommerce website demo",
+  icons: {
+    icon: "/favicon.avif",
+    apple: "/favicon.avif",
+  },
+};
+
+export default async function RootLayout({ children }) {
+  const session = await auth();
+
+  return (
+    <html>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <UserSync id={session?.user?.id} />
+
+        <StoreNavBar user={session?.user} />
+        {children}
+        <Toaster position="top-right" />
+      </body>
+    </html>
+  );
+}
