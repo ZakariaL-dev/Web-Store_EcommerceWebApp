@@ -50,7 +50,7 @@ const StoreCheckoutPage = () => {
     setAppliedCoupon,
   } = useCartStore();
   const { currentUser } = useUserStore();
-
+  const [isOrderCompleted, setIsOrderCompleted] = useState(false);
   const { addNewOrder } = useOrderStore();
   const { updateProduct } = useProductStore();
   const router = useRouter();
@@ -119,10 +119,15 @@ const StoreCheckoutPage = () => {
   }, [currentUser, checkout, setCheckout]);
 
   useEffect(() => {
-    if (currentUser && checkout.length === 0 && currentUser.checkout?.length === 0) {
+    if (
+      !isOrderCompleted &&
+      currentUser &&
+      checkout.length === 0 &&
+      currentUser.checkout?.length === 0
+    ) {
       router.push("/cart");
     }
-  }, [currentUser, checkout, router]);
+  }, [currentUser, checkout, router, isOrderCompleted]);
 
   const subtotal = checkout.reduce((acc, item) => {
     const price =
@@ -169,13 +174,13 @@ const StoreCheckoutPage = () => {
     setLoading(true);
 
     if (DeliveryPlace === "Home" && !Place.address) {
-      HandeResults(false, "Please enter your home delivery address.");
+      HandeResults("warning", "Please enter your home delivery address.");
       setLoading(false);
       return;
     }
 
     if (DeliveryPlace === "Bureau" && !Place.BAddress) {
-      HandeResults(false, "Please select a Bureau for pickup.");
+      HandeResults("warning", "Please select a Bureau for pickup.");
       setLoading(false);
       return;
     }
@@ -242,6 +247,8 @@ const StoreCheckoutPage = () => {
       await Promise.all(clearCartPromises);
 
       await syncToCheckout(userId, []);
+
+      setIsOrderCompleted(true);
 
       setAppliedCoupon(null);
 
