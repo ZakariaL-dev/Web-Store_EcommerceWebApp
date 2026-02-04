@@ -119,6 +119,18 @@ const StoreCartPage = () => {
       selectedItemIds.includes(item._id),
     );
 
+    const isIncomplete = selectedProducts.some(
+      (item) => !item.color || !item.size,
+    );
+
+    if (isIncomplete) {
+      HandeResults(
+        "warning",
+        "Please select both color and size for all items !!!",
+      );
+      return;
+    }
+
     // 1. Sync to DB first
     const res = await syncToCheckout(userId, selectedProducts);
 
