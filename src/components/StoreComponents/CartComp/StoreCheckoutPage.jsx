@@ -38,7 +38,7 @@ import StoreCouponDialogue from "./StoreCouponDialogue";
 
 // Date FNS
 import { format } from "date-fns";
-
+import { HandeResults } from "@/lib/HandeResults";
 
 const StoreCheckoutPage = () => {
   const {
@@ -50,6 +50,7 @@ const StoreCheckoutPage = () => {
     setAppliedCoupon,
   } = useCartStore();
   const { currentUser } = useUserStore();
+
   const { addNewOrder } = useOrderStore();
   const { updateProduct } = useProductStore();
   const router = useRouter();
@@ -116,6 +117,12 @@ const StoreCheckoutPage = () => {
       setCheckout(currentUser.checkout);
     }
   }, [currentUser, checkout, setCheckout]);
+
+  useEffect(() => {
+    if (currentUser && checkout.length === 0 && currentUser.checkout?.length === 0) {
+      router.push("/cart");
+    }
+  }, [currentUser, checkout, router]);
 
   const subtotal = checkout.reduce((acc, item) => {
     const price =
