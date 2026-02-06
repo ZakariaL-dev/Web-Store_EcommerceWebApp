@@ -2,7 +2,12 @@ import { create } from "zustand";
 
 export const useProductStore = create((set) => {
   return {
-    products: [],
+    products: {
+      new: [],
+      normal: [],
+      "on sale": [],
+      all: [],
+    },
     currentProduct: null,
     setProducts: (p) => set({ products: p }),
     addNewProduct: async (newP) => {
@@ -38,7 +43,7 @@ export const useProductStore = create((set) => {
         };
       }
       const isInvalid = newP.variants.some(
-        (v) => !v.size || !v.color || v.quantity === undefined
+        (v) => !v.size || !v.color || v.quantity === undefined,
       );
 
       if (isInvalid) {
@@ -66,7 +71,16 @@ export const useProductStore = create((set) => {
           };
         }
 
-        set((state) => ({ products: [...state.products, Data.Products] }));
+        set((state) => ({
+          products: {
+            ...state.products,
+            all: [Data.newProduct, ...state.products.all],
+            [newP.status]: [
+              Data.newProduct,
+              ...(state.products[newP.status] || []),
+            ],
+          },
+        }));
 
         return { success: true, message: "Product added successfully" };
       } catch (error) {
@@ -76,11 +90,22 @@ export const useProductStore = create((set) => {
         };
       }
     },
-    getAllProducts: async () => {
+    getAllProducts: async (opt) => {
       try {
-        const res = await fetch("/api/products");
+        const categoryKey = opt || "all";
+        const url = opt ? `/api/products?opt=${opt}` : `/api/products`;
+        const res = await fetch(url);
+
         const Data = await res.json();
-        set({ products: Data.Products || [] });
+        if (res.ok) {
+          set((state) => ({
+            products: {
+              ...state.products,
+              [categoryKey]: Data.Products || [],
+            },
+          }));
+          return { success: true };
+        }
       } catch (error) {
         set({ products: [] });
         return {
@@ -130,9 +155,13 @@ export const useProductStore = create((set) => {
       });
       const Data = await res.json();
       if (!Data.success) return { success: false, message: Data.message };
-      set((state) => ({
-        products: state.products.filter((p) => p._id !== pId),
-      }));
+      set((state) => {
+        const newProducts = { ...state.products };
+        Object.keys(newProducts).forEach((key) => {
+          newProducts[key] = newProducts[key].filter((p) => p._id !== pId);
+        });
+        return { products: newProducts };
+      });
       return { success: true, message: Data.message };
     },
     updateProduct: async (pId, updatedP) => {
@@ -147,7 +176,7 @@ export const useProductStore = create((set) => {
       if (!Data) return { success: false, message: Data.message };
       set((state) => ({
         products: state.products.map((p) =>
-          p._id === pId ? Data.Products : p
+          p._id === pId ? Data.Products : p,
         ),
       }));
       return { success: Data.success, message: Data.message };

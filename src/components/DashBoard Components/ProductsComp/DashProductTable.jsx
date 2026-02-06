@@ -96,8 +96,8 @@ const DashProductTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.length > 0 ? (
-            products.map((p, i) => {
+          {products["all"].length > 0 ? (
+            products["all"].map((p, i) => {
               return (
                 <TableRow key={p._id}>
                   <TableCell>

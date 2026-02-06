@@ -7,11 +7,16 @@ import Product from "@/models/ProductSchema";
 // Next
 import { NextResponse } from "next/server";
 
-
-export async function GET() {
+export async function GET(request) {
   try {
     await connectDB();
-    const Products = await Product.find({}).sort({ createdAt: -1 });;
+
+    const { searchParams } = new URL(request.url);
+    const opt = searchParams.get("opt");
+
+    const query = opt ? { status: opt } : {};
+
+    const Products = await Product.find(query).sort({ createdAt: -1 });
 
     return NextResponse.json({ Products }, { status: 200 });
   } catch (error) {
