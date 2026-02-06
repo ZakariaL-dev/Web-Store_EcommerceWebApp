@@ -23,7 +23,6 @@ import { useState } from "react";
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
 
-
 const StoreProductCard = ({ product }) => {
   const { addToCart } = useCartStore();
   const { currentUser } = useUserStore();
@@ -92,8 +91,8 @@ const StoreProductCard = ({ product }) => {
     <Link
       href={`/products/${product.slug}`}
       className={`
-        shrink-0 mx-4 my-2 border-2 border-gray-300 w-60 overflow-hidden rounded-2xl h-[400px] transition-all ease-in-out hover:shadow-xl group relative
-        `}
+        shrink-0 border-2 border-gray-300 w-60 overflow-hidden rounded-2xl h-[400px] transition-all ease-in-out hover:shadow-xl group relative
+      `}
     >
       <div className="relative h-full">
         <Image
@@ -118,7 +117,7 @@ const StoreProductCard = ({ product }) => {
         )}
       </div>
       <div className="absolute w-full bottom-0 pt-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white h-20">
-        <h1 className="text-[16px] mb-1 font-semibold px-3">{product.title}</h1>
+        <h1 className="text-[15px] mb-1 font-bold px-3">{product.title}</h1>
         {/*  */}
         {product.status === "on sale" ? (
           <div className="flex gap-4 px-3">
@@ -134,7 +133,9 @@ const StoreProductCard = ({ product }) => {
             </p>
           </div>
         ) : (
-          <p className="mb-2 font-bold px-3">{product.price} Dz</p>
+          <p className="mb-2 font-bold px-3 text-stone-600">
+            {product.price} Dz
+          </p>
         )}
         <div className="flex gap-3 items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full bg-white h-full p-3">
           <Button

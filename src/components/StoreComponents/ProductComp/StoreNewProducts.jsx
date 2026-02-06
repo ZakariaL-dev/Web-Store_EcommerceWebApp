@@ -25,7 +25,10 @@ const StoreNewProducts = () => {
 
   const [moving, setMoving] = useState(0);
   const nextProduct = useCallback(() => {
-    setMoving((prev) => (prev + 1) % newProducts.length);
+    setMoving((prev) => {
+      const maxMove = newProducts.length - 5;
+      return prev < maxMove ? prev + 1 : prev;
+    });
   }, [newProducts.length]);
 
   const prevProduct = useCallback(() => {
@@ -44,13 +47,17 @@ const StoreNewProducts = () => {
       <header className="flex items-center justify-between px-5">
         <h1 className="text-3xl font-bold">New Products</h1>
         <div>
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" disabled={moving === 0} asChild>
             <IoMdArrowRoundBack
               onClick={() => prevProduct()}
               className="w-12 h-12"
             />
           </Button>
-          <Button variant="ghost" asChild>
+          <Button
+            variant="ghost"
+            disabled={moving >= (newProducts?.length || 0) - 5}
+            asChild
+          >
             <IoMdArrowRoundForward
               onClick={() => nextProduct()}
               className="w-12 h-12"
@@ -59,8 +66,8 @@ const StoreNewProducts = () => {
         </div>
       </header>
       <main
-        className="flex gap-4 transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${moving * 130}px)` }}
+        className="flex gap-4 transition-transform duration-500 ease-in-out my-4"
+        style={{ transform: `translateX(-${moving * 256}px)` }}
       >
         {newProducts.map((p) => {
           return <StoreProductCard key={p._id} product={p} />;
