@@ -35,13 +35,14 @@ const DashProductNav = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(products.length / itemsPerPage) || 1;
+  const totalPages = Math.ceil(products["all"].length / itemsPerPage) || 1;
 
   const handleItemsPerPageChange = (e) => {
     const newItemsPerPage = Number(e.target.value);
     setItemsPerPage(newItemsPerPage);
 
-    const nextTotalPages = Math.ceil(products.length / newItemsPerPage) || 1;
+    const nextTotalPages =
+      Math.ceil(products["all"].length / newItemsPerPage) || 1;
 
     if (currentPage > nextTotalPages) {
       setCurrentPage(nextTotalPages);
@@ -68,7 +69,7 @@ const DashProductNav = () => {
             <MdSearch />
           </InputGroupAddon>
           <InputGroupAddon align="inline-end">
-            {products.length} results
+            {products["all"].length} results
           </InputGroupAddon>
         </InputGroup>
       </div>

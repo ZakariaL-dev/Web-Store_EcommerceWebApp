@@ -20,21 +20,26 @@ import { useProductStore } from "@/utils/ProductStore";
 const StoreFeaturedProducts = () => {
   const { products, getAllProducts } = useProductStore();
 
+  const displayProducts = products["normal"] || [];
+
   useEffect(() => {
-    getAllProducts();
+    getAllProducts("normal");
   }, [getAllProducts]);
 
   const [moving, setMoving] = useState(0);
   // Function to move to the previous Product
   const nextProduct = useCallback(() => {
-    setMoving((prev) => (prev + 1) % products.length);
-  }, [products.length]);
+    setMoving((prev) => {
+      const maxMove = displayProducts.length - 5;
+      return prev < maxMove ? prev + 1 : prev;
+    });
+  }, [displayProducts.length]);
   // Function to move to the previous Product
   const prevProduct = useCallback(() => {
     setMoving((prev) => (prev <= 0 ? 0 : prev - 1));
   }, []);
 
-  if (!products) {
+  if (!displayProducts) {
     return (
       <div className="lg:w-3/4 w-full flex h-32 items-center justify-center text-muted-foreground">
         Loading products...
@@ -47,13 +52,23 @@ const StoreFeaturedProducts = () => {
       <header className="bg-slate-100 px-5 flex items-center justify-between py-2 font-bold text-xl text-slate-500 rounded-md mb-2.5">
         You might also like:
         <div>
-          <Button variant="ghost" className={"hover:bg-slate-200 p-2"} asChild>
+          <Button
+            variant="ghost"
+            disabled={moving === 0}
+            className={"hover:bg-slate-200 p-2"}
+            asChild
+          >
             <IoMdArrowRoundBack
               onClick={() => prevProduct()}
               className="w-10 h-10"
             />
           </Button>
-          <Button variant="ghost" className={"hover:bg-slate-200 p-2"} asChild>
+          <Button
+            variant="ghost"
+            className={"hover:bg-slate-200 p-2"}
+            disabled={moving >= (displayProducts?.length || 0) - 5}
+            asChild
+          >
             <IoMdArrowRoundForward
               onClick={() => nextProduct()}
               className="w-10 h-10"
@@ -63,9 +78,9 @@ const StoreFeaturedProducts = () => {
       </header>
       <main
         className="flex gap-4 transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${moving * 176}px)` }}
+        style={{ transform: `translateX(-${moving * 256}px)` }}
       >
-        {products.map((p) => {
+        {displayProducts.map((p) => {
           return <StoreProductCard key={p._id} product={p} />;
         })}
       </main>
