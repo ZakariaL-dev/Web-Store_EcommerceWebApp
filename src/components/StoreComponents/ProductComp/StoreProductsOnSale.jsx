@@ -15,7 +15,6 @@ import { useCallback, useEffect, useState } from "react";
 // Stores
 import { useProductStore } from "@/utils/ProductStore";
 
-
 const StoreProductsOnSale = () => {
   const { products, getAllProducts } = useProductStore();
 
@@ -28,7 +27,10 @@ const StoreProductsOnSale = () => {
   const [moving, setMoving] = useState(0);
   // Function to move to the previous Product
   const nextProduct = useCallback(() => {
-    setMoving((prev) => (prev + 1) % SaleProducts.length);
+    setMoving((prev) => {
+      const maxMove = SaleProducts.length - 5;
+      return prev < maxMove ? prev + 1 : prev;
+    });
   }, [SaleProducts.length]);
   // Function to move to the previous Product
   const prevProduct = useCallback(() => {
@@ -48,13 +50,17 @@ const StoreProductsOnSale = () => {
       <header className="flex items-center justify-between px-5">
         <h1 className="text-3xl font-bold">Products On Sale</h1>
         <div>
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" disabled={moving === 0} asChild>
             <IoMdArrowRoundBack
               onClick={() => prevProduct()}
               className="w-12 h-12"
             />
           </Button>
-          <Button variant="ghost" asChild>
+          <Button
+            variant="ghost"
+            disabled={moving >= (SaleProducts?.length || 0) - 5}
+            asChild
+          >
             <IoMdArrowRoundForward
               onClick={() => nextProduct()}
               className="w-12 h-12"
@@ -63,8 +69,8 @@ const StoreProductsOnSale = () => {
         </div>
       </header>
       <main
-        className="flex gap-4 transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${moving * 130}px)` }}
+        className="flex gap-4 transition-transform duration-500 ease-in-out my-4"
+        style={{ transform: `translateX(-${moving * 256}px)` }}
       >
         {SaleProducts.map((p) => {
           return <StoreProductCard key={p._id} product={p} />;

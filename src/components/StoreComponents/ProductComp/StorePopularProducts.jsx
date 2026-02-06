@@ -27,7 +27,10 @@ const StorePopularProducts = () => {
   const [moving, setMoving] = useState(0);
   // Function to move to the previous Product
   const nextProduct = useCallback(() => {
-    setMoving((prev) => (prev + 1) % NormalProducts.length);
+    setMoving((prev) => {
+      const maxMove = NormalProducts.length - 5;
+      return prev < maxMove ? prev + 1 : prev;
+    });
   }, [NormalProducts.length]);
 
   // Function to move to the previous Product
@@ -48,13 +51,17 @@ const StorePopularProducts = () => {
       <header className="flex items-center justify-between px-5">
         <h1 className="text-3xl font-bold">Popular Categories</h1>
         <div>
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" disabled={moving === 0} asChild>
             <IoMdArrowRoundBack
               onClick={() => prevProduct()}
               className="w-12 h-12"
             />
           </Button>
-          <Button variant="ghost" asChild>
+          <Button
+            variant="ghost"
+            disabled={moving >= (NormalProducts?.length || 0) - 5}
+            asChild
+          >
             <IoMdArrowRoundForward
               onClick={() => nextProduct()}
               className="w-12 h-12"
@@ -63,8 +70,8 @@ const StorePopularProducts = () => {
         </div>
       </header>
       <main
-        className="flex gap-4 transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${moving * 130}px)` }}
+        className="flex gap-4 transition-transform duration-500 ease-in-out my-4"
+        style={{ transform: `translateX(-${moving * 256}px)` }}
       >
         {NormalProducts.map((p) => {
           return <StoreProductCard key={p._id} product={p} />;
