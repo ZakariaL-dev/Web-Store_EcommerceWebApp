@@ -23,7 +23,7 @@ const StoreFeaturedProducts = () => {
   const displayProducts = products["normal"] || [];
 
   useEffect(() => {
-    getAllProducts("normal");
+    getAllProducts("normal", null, "all");
   }, [getAllProducts]);
 
   const [moving, setMoving] = useState(0);

@@ -42,7 +42,7 @@ const StoreProducts = () => {
   const { products, getAllProducts } = useProductStore();
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts("all", "all", null);
   }, [getAllProducts]);
 
   if (!products) {
@@ -119,13 +119,13 @@ const StoreProducts = () => {
       </nav>
       {view === "grid" ? (
         <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {products.map((p) => {
+          {products["all"].map((p) => {
             return <StoreSearchProductCard key={p._id} product={p} />;
           })}
         </main>
       ) : (
         <div>
-          {products.map((p) => {
+          {products["all"].map((p) => {
             return <StoreSearchProductCardList key={p._id} product={p} />;
           })}
         </div>
