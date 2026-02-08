@@ -8,6 +8,7 @@ export const useProductStore = create((set) => {
       "on sale": [],
       all: [],
     },
+    total: 0,
     currentProduct: null,
     setProducts: (p) => set({ products: p }),
     addNewProduct: async (newP) => {
@@ -90,10 +91,12 @@ export const useProductStore = create((set) => {
         };
       }
     },
-    getAllProducts: async (opt) => {
+    getAllProducts: async (opt, page, limit) => {
       try {
         const categoryKey = opt || "all";
-        const url = opt ? `/api/products?opt=${opt}` : `/api/products`;
+        const url = opt
+          ? `/api/products?opt=${opt}&page=${page}&limit=${limit}`
+          : `/api/products?page=${page}&limit=${limit}`;
         const res = await fetch(url);
 
         const Data = await res.json();
@@ -103,6 +106,7 @@ export const useProductStore = create((set) => {
               ...state.products,
               [categoryKey]: Data.Products || [],
             },
+            total: Data.total,
           }));
           return { success: true };
         }

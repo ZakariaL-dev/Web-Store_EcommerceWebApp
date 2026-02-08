@@ -23,7 +23,7 @@ const StoreProductSlide = ({ title, option, footerText }) => {
 
   useEffect(() => {
     if (option) {
-      getAllProducts(option);
+      getAllProducts(option, null, "all");
     } else {
       getAllProducts();
     }

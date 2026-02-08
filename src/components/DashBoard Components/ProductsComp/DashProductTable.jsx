@@ -35,10 +35,8 @@ import { HandeResults } from "@/lib/HandeResults";
 const DashProductTable = () => {
   const router = useRouter();
 
-  const { products, getAllProducts, deleteProduct } = useProductStore();
-  useEffect(() => {
-    getAllProducts();
-  }, [getAllProducts]);
+  const { products, deleteProduct } = useProductStore();
+  
   if (!products) {
     return (
       <div className="flex h-32 items-center justify-center text-muted-foreground">
