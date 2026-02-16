@@ -16,6 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 // My Contexts
 import { FiltersToggleContext } from "@/contexts/FilterToggleContext";
@@ -28,27 +29,73 @@ import { HiXMark } from "react-icons/hi2";
 import { RangeSlider } from "./StoreRangeSlide";
 
 // React
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useConfigureStore } from "@/utils/ConfigStore";
 
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const StoreSearchFilter = () => {
-  const [range, setRange] = useState([104.94, 625.32]);
-  const colors = [
-    "Red",
-    "Olive",
-    "Black",
-    "White",
-    "Purple",
-    "Green",
-    "Brown",
-    "Teal",
-    "Gold",
-    "Grey",
-  ];
+  const searchParams = useSearchParams();
   const categories = ["Man", "Woman", "Kids", "Accessories"];
-  const sizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
-
   const { OpenFilters, setOpenFilters } = useContext(FiltersToggleContext);
+  const { config } = useConfigureStore();
+
+  const [range, setRange] = useState([
+    config.filters.priceRange.min,
+    config.filters.priceRange.max,
+  ]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || "all",
+  );
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState([]);
+
+  // --- 2. The Reset Function ---
+  const handleClearAll = () => {
+    setRange([config.filters.priceRange.min, config.filters.priceRange.max]);
+    setSelectedCategory("all");
+    setSelectedColors([]);
+    setSelectedSizes([]);
+  };
+
+  // Helper to toggle items in arrays (Colors/Sizes)
+  const toggleItem = (list, setList, item) => {
+    setList((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item],
+    );
+  };
+
+  // search link & system
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    // Set simple values
+    params.set("min", range[0].toString());
+    params.set("max", range[1].toString());
+    params.set("category", selectedCategory);
+
+    // Set multi-select values (joined by space as per your example)
+    if (selectedColors.length > 0) {
+      params.set("color", selectedColors.join(" "));
+    }
+    if (selectedSizes.length > 0) {
+      params.set("size", selectedSizes.join(" "));
+    }
+
+    // Update the URL without a full page reload
+    // scroll: false prevents jumping to top of page on every click
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [
+    range,
+    selectedCategory,
+    selectedColors,
+    selectedSizes,
+    pathname,
+    router,
+  ]);
 
   return (
     <div
@@ -75,7 +122,11 @@ const StoreSearchFilter = () => {
       </div>
       <header className="flex items-start justify-between w-full">
         <h1 className="font-semibold text-xl">Filters:</h1>
-        <Button variant={"link"} className="text-sm text-gray-400">
+        <Button
+          variant={"link"}
+          className="text-sm text-gray-400"
+          onClick={handleClearAll}
+        >
           Clear All
         </Button>
       </header>
@@ -112,8 +163,8 @@ const StoreSearchFilter = () => {
                 </InputGroup>
               </div>
               <RangeSlider
-                min={0}
-                max={1000}
+                min={config.filters.priceRange.min}
+                max={config.filters.priceRange.max}
                 step={1}
                 value={range}
                 onValueChange={setRange}
@@ -123,39 +174,55 @@ const StoreSearchFilter = () => {
           <AccordionItem value="category">
             <AccordionTrigger>Category</AccordionTrigger>
             <AccordionContent>
-              {categories.map((c, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="hover:bg-slate-50 mb-1 px-4 py-3 rounded-lg flex gap-3"
-                  >
-                    <Checkbox id={`item ${i}`} />
-                    <Label htmlFor={`item ${i}`} className="w-full">
-                      {c}
-                    </Label>
-                  </div>
-                );
-              })}
+              <RadioGroup
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
+                <div className="flex items-center gap-3 w-full my-1 ml-2">
+                  <RadioGroupItem id="all" value="all" />
+                  <Label htmlFor="all">ALL</Label>
+                </div>
+                {categories.map((c, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 w-full my-1 ml-2"
+                    >
+                      <RadioGroupItem value={c} id={c} />
+                      <Label htmlFor={c}>{c}</Label>
+                    </div>
+                  );
+                })}
+              </RadioGroup>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="color">
             <AccordionTrigger>Color</AccordionTrigger>
             <AccordionContent>
-              <InputGroup noFocus className="mb-3 mt-2">
+              {/* <InputGroup noFocus className="mb-3 mt-2">
                 <InputGroupInput placeholder="Search..." />
                 <InputGroupAddon>
                   <MdSearch />
                 </InputGroupAddon>
-              </InputGroup>
+              </InputGroup> */}
               <div>
-                {colors.map((c, i) => {
+                {config.filters.colors.map((c, i) => {
                   return (
                     <div
                       key={i}
                       className="hover:bg-slate-50 mb-1 px-4 py-3 rounded-lg flex gap-3"
                     >
-                      <Checkbox id={`item ${i}`} />
-                      <Label htmlFor={`item ${i}`} className="w-full">
+                      <Checkbox
+                        id={`color ${i}`}
+                        checked={selectedColors.includes(c)}
+                        onCheckedChange={() =>
+                          toggleItem(selectedColors, setSelectedColors, c)
+                        }
+                      />
+                      <Label
+                        htmlFor={`color ${i}`}
+                        className="w-full capitalize"
+                      >
                         {c}
                       </Label>
                     </div>
@@ -167,15 +234,21 @@ const StoreSearchFilter = () => {
           <AccordionItem value="size">
             <AccordionTrigger>Size</AccordionTrigger>
             <AccordionContent>
-              {sizes.map((c, i) => {
+              {config.filters.sizes.map((s, i) => {
                 return (
                   <div
                     key={i}
                     className="hover:bg-slate-50 mb-1 px-4 py-3 rounded-lg flex gap-3"
                   >
-                    <Checkbox id={`item ${i}`} />
-                    <Label htmlFor={`item ${i}`} className="w-full">
-                      {c}
+                    <Checkbox
+                      id={`size ${i}`}
+                      checked={selectedSizes.includes(s)}
+                      onCheckedChange={() =>
+                        toggleItem(selectedSizes, setSelectedSizes, s)
+                      }
+                    />
+                    <Label htmlFor={`size ${i}`} className="w-full">
+                      {s}
                     </Label>
                   </div>
                 );

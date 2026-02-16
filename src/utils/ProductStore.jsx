@@ -128,7 +128,9 @@ export const useProductStore = create((set) => {
         }
         return { success: false, message: Data.message };
       } catch (error) {
-        set({ products: [] });
+        set({
+          products: { new: [], normal: [], "on sale": [], all: [] },
+        });
         return {
           success: false,
           message: `Error in getting the product: ${error}`,
