@@ -33,17 +33,18 @@ import StoreSearchProductCard from "../SearchComp/StoreSearchProductCard";
 // Stores
 import { useProductStore } from "@/utils/ProductStore";
 
-
 const StoreProducts = () => {
   const [view, setView] = useState("grid");
+
+  const [limit, setLimit] = useState(10);
 
   const { setOpenFilters } = useContext(FiltersToggleContext);
 
   const { products, getAllProducts } = useProductStore();
 
   useEffect(() => {
-    getAllProducts("all", "all", null);
-  }, [getAllProducts]);
+    getAllProducts("all", 1, limit);
+  }, [getAllProducts, limit]);
 
   if (!products) {
     return (
@@ -73,8 +74,8 @@ const StoreProducts = () => {
               <SelectGroup>
                 <SelectItem value="From A-Z">From A-Z</SelectItem>
                 <SelectItem value="From Z-A">From Z-A</SelectItem>
-                <SelectItem value="Newest First">Newest First</SelectItem>
-                <SelectItem value="Oldest First">Oldest First</SelectItem>
+                <SelectItem value="-1">Newest First</SelectItem>
+                <SelectItem value="1">Oldest First</SelectItem>
                 <SelectItem value="Cheapest First">Cheapest First</SelectItem>
                 <SelectItem value="Expensive First">Expensive First</SelectItem>
               </SelectGroup>
@@ -82,7 +83,12 @@ const StoreProducts = () => {
           </Select>
         </div>
         <div className="flex items-center gap-5">
-          <NativeSelect className="w-24 md:block hidden">
+          <NativeSelect
+            className="w-24 md:block hidden"
+            value={limit}
+            onChange={(e) => setLimit(e.target.value)}
+          >
+            <NativeSelectOption value="5">5</NativeSelectOption>
             <NativeSelectOption value="10">10</NativeSelectOption>
             <NativeSelectOption value="20">20</NativeSelectOption>
             <NativeSelectOption value="30">30</NativeSelectOption>
