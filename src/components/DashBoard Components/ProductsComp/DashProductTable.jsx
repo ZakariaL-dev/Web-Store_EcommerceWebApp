@@ -17,9 +17,6 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useRouter } from 'next/navigation';
 
-// React
-import { useEffect } from "react";
-
 // React Icons
 import { FaCaretRight } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
@@ -30,6 +27,7 @@ import { useProductStore } from "@/utils/ProductStore";
 
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
+import DashAlertDelete from "../DashAlertDelete";
 
 
 const DashProductTable = () => {
@@ -122,7 +120,7 @@ const DashProductTable = () => {
                             </h1>
                             <h1 className="font-bold text-lg">
                               {(p.price - (p.price * p.discount) / 100).toFixed(
-                                2
+                                2,
                               )}
                               Dz
                             </h1>
@@ -168,19 +166,15 @@ const DashProductTable = () => {
                     >
                       <FiEdit className="w-8 h-8" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      className="p-2 hover:bg-gray-200 text-red-600 hover:text-red-800"
-                      asChild
-                      onClick={() => HandleDeleteProduct(p._id)}
-                    >
-                      <MdOutlineDeleteForever className="w-10 h-10" />
-                    </Button>
+                    <DashAlertDelete
+                      id={p._id}
+                      onDelete={HandleDeleteProduct}
+                    />
                     <Button
                       variant="ghost"
                       className="p-2 hover:bg-gray-200 "
                       asChild
-                      onClick={()=> router.push(`/products/${p.slug}`)}
+                      onClick={() => router.push(`/products/${p.slug}`)}
                     >
                       <FaCaretRight className="w-9 h-9" />
                     </Button>

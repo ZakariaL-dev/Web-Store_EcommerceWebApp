@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
-
+import { useUtilityStore } from "@/utils/UtilsStore";
 
 const StoreCartPage = () => {
   const {
@@ -62,7 +62,7 @@ const StoreCartPage = () => {
   };
 
   // 4. Calculate Checkout Summary dynamically
-  const { subtotal, checkoutList } = useMemo(() => {
+  const { subtotal } = useMemo(() => {
     const selectedProducts = cart.filter((item) =>
       selectedItemIds.includes(item._id),
     );
@@ -85,11 +85,63 @@ const StoreCartPage = () => {
   const deliveryFee = subtotal > 0 ? 600 : 0;
   //
 
+  // single remove
   const handleRemove = async (itemId) => {
     const userId = currentUser._id || currentUser.id;
     const { success, message } = await removeFromCart(userId, itemId);
 
     HandeResults(success, message);
+  };
+
+  // remove selected
+  const handleRemoveSelected = async () => {
+    const userId = currentUser._id || currentUser.id;
+    try {
+      await Promise.all(
+        selectedItemIds.map((id) => removeFromCart(userId, id)),
+      );
+      HandeResults(true, "All selected products removed from cart");
+    } catch (error) {
+      HandeResults(false, "Failed to remove some items");
+    }
+  };
+
+  // wishlist select
+  const { toggleWishlist } = useUtilityStore();
+
+  const handleWishlistSelected = async () => {
+    const userId = currentUser._id || currentUser.id;
+
+    try {
+      for (const cartItemId of selectedItemIds) {
+        // 1. FIND THE ACTUAL PRODUCT ID from the cart state
+        const cartEntry = cart.find((item) => item._id === cartItemId);
+
+        if (cartEntry && cartEntry.product) {
+          const actualProductId = cartEntry.product._id || cartEntry.product;
+
+          // 2. Send the PRODUCT ID, not the CART ITEM ID
+          const wishlistRes = await toggleWishlist(
+            userId,
+            actualProductId,
+            "add",
+          );
+
+          if (wishlistRes.success) {
+            // 3. Remove from cart using the CART ITEM ID
+            await removeFromCart(userId, cartItemId);
+          }
+        }
+      }
+
+      HandeResults(true, "All selected products moved to wishlist");
+
+      // Clear selection after moving
+      setSelectedItemIds([]);
+    } catch (error) {
+      console.error("Move to wishlist error:", error);
+      HandeResults(false, "Failed to move some items");
+    }
   };
 
   const handleUpdateCheckout = async () => {
@@ -104,7 +156,10 @@ const StoreCartPage = () => {
     );
 
     if (isIncomplete) {
-      HandeResults("warning", "Please select both color and size for all items !!!");
+      HandeResults(
+        "warning",
+        "Please select both color and size for all items !!!",
+      );
       return;
     }
 
@@ -183,6 +238,7 @@ const StoreCartPage = () => {
                 <Button
                   variant={"link"}
                   className="text-red-800 hover:text-red-600 sm:text-lg text-xs"
+                  onClick={handleRemoveSelected}
                 >
                   Remove
                 </Button>
@@ -192,6 +248,7 @@ const StoreCartPage = () => {
                 <Button
                   variant={"link"}
                   className="text-red-300 hover:text-red-400 sm:text-lg text-xs"
+                  onClick={handleWishlistSelected}
                 >
                   Move to wishlist
                 </Button>
@@ -304,6 +361,6 @@ const StoreCartPage = () => {
       </div>
     </div>
   );
-};
+};;
 
 export default StoreCartPage;

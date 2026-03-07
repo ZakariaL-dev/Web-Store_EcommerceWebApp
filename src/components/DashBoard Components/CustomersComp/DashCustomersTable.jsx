@@ -26,6 +26,7 @@ import { TbLockCancel } from "react-icons/tb";
 
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
+import DashAlertDelete from "../DashAlertDelete";
 
 const DashCustomersTable = () => {
   const { Users, getAllUsers, deleteUser } = useUserStore();
@@ -96,7 +97,8 @@ const DashCustomersTable = () => {
                   </TableCell>
                   {/* orders */}
                   <TableCell className="text-center font-medium">
-                    {orders.filter((o) => o.user._id === u._id).length || "none"}
+                    {orders.filter((o) => o.user._id === u._id).length ||
+                      "none"}
                   </TableCell>
 
                   <TableCell>
@@ -117,21 +119,12 @@ const DashCustomersTable = () => {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-red-600 hover:bg-red-100 hover:text-red-700"
+                        className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700"
+                        asChild
                       >
-                        <TbLockCancel className="h-7 w-7" />
+                        <TbLockCancel className="h-9 w-9" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-red-800 hover:bg-red-100 hover:text-red-700"
-                        onClick={() => handleDeleteUser(u._id)}
-                      >
-                        <MdOutlineDeleteForever className="h-7 w-7" />
-                      </Button>
-                      {/* <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <FaCaretRight className="h-4 w-4" />
-                      </Button> */}
+                      <DashAlertDelete id={u._id} onDelete={handleDeleteUser} />
                     </div>
                   </TableCell>
                 </TableRow>
