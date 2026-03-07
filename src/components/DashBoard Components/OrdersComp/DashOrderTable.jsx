@@ -156,7 +156,7 @@ const DashOrderTable = () => {
                     {HandlePaymentStatus(o.paymentStatus)}
                   </TableCell>
                   <TableCell>
-                    <h4>{o.user.phoneNumber}</h4>
+                    <h4>{o.user.phoneNumber.match(/.{1,2}/g).join(" ")}</h4>
                     <p className="whitespace-normal">
                       {o.deliveryAddress.address === "" ? (
                         <>

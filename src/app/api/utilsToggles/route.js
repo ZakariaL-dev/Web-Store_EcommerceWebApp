@@ -41,6 +41,9 @@ export async function PATCH(req) {
     if (action === "clear") {
       update = { $set: { [targetArray]: [] } };
       message = `${targetArray} cleared successfully`;
+    } else if (action === "add") {
+      update = { $addToSet: { [targetArray]: productId } };
+      message = `Added to ${actionType}`;
     } else {
       const isPresent = user[targetArray].includes(productId);
       const isRemoval = action === "remove" || isPresent;
@@ -49,7 +52,7 @@ export async function PATCH(req) {
       if (targetArray === "compare" && !isRemoval && user.compare.length >= 3) {
         return NextResponse.json(
           { success: false, message: "Comparison limit reached (max 3 items)" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 

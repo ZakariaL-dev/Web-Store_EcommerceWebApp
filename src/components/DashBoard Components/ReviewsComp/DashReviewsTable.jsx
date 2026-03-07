@@ -28,7 +28,7 @@ import { useEffect } from "react";
 // React Icons
 import { FaCaretRight } from "react-icons/fa6";
 import { MdOutlineDeleteForever } from "react-icons/md";
-
+import DashAlertDelete from "../DashAlertDelete";
 
 const DashReviewsTable = () => {
   const router = useRouter();
@@ -111,19 +111,17 @@ const DashReviewsTable = () => {
                   {/* Actions aligned to the right */}
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-red-600 hover:bg-red-100 hover:text-red-700"
-                        onClick={() => handleDeleteReview(r._id)}
-                      >
-                        <MdOutlineDeleteForever className="h-7 w-7" />
-                      </Button>
+                      <DashAlertDelete
+                        id={r._id}
+                        onDelete={handleDeleteReview}
+                      />
                       <Button
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 hover:bg-gray-300"
-                        onClick={() => router.push(`/products/${r.product.slug}`)}
+                        onClick={() =>
+                          router.push(`/products/${r.product.slug}`)
+                        }
                       >
                         <FaCaretRight className="h-4 w-4" />
                       </Button>

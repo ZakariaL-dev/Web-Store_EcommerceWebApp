@@ -1,5 +1,5 @@
 // My Components
-import AdminConfigComp from "@/components/DashBoard Components/AdminConfigComp";
+import AdminConfigComp from "@/components/DashBoard Components/ConfigComp/AdminConfigComp";
 
 
 export const metadata = {

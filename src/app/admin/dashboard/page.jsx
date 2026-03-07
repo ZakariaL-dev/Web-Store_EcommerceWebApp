@@ -1,5 +1,5 @@
 // My Components
-import DashHomeLoad from "@/components/DashBoard Components/DashHomeLoad";
+import DashHomeLoad from "@/components/DashBoard Components/MainComp/DashHomeLoad";
 
 const page = () => {
   return <DashHomeLoad />;

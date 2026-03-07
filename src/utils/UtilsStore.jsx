@@ -7,13 +7,18 @@ export const useUtilityStore = create((set, get) => ({
   setWishlist: (list) => set({ wishlist: list }),
   setcompareList: (list) => set({ compareList: list }),
 
-  toggleWishlist: async (userId, productId) => {
+  toggleWishlist: async (userId, productId, action = null) => {
     try {
       // 1. Send the request to your user update API
       const res = await fetch(`/api/utilsToggles`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, productId, actionType: "wishList" }),
+        body: JSON.stringify({
+          userId,
+          productId,
+          actionType: "wishList",
+          action: action,
+        }),
       });
 
       const result = await res.json();
