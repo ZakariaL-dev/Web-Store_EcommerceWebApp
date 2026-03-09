@@ -53,8 +53,8 @@ const StoreProductSlide = ({ title, option, footerText }) => {
   return (
     <div className="max-w-7xl mx-auto mb-6 overflow-hidden">
       <header className="flex items-center justify-between px-5">
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <div>
+        <h1 className="md:text-3xl text-xl font-bold">{title}</h1>
+        <div className="hidden md:block">
           <Button variant="ghost" disabled={moving === 0} asChild>
             <IoMdArrowRoundBack
               onClick={() => prevProduct()}
@@ -74,7 +74,7 @@ const StoreProductSlide = ({ title, option, footerText }) => {
         </div>
       </header>
       <main
-        className="flex gap-4 transition-transform duration-500 ease-in-out my-4"
+        className="flex gap-4 transition-transform duration-500 ease-in-out my-4 md:mx-0 mx-6 sm:overflow-x-visible overflow-x-scroll"
         style={{ transform: `translateX(-${moving * 256}px)` }}
       >
         {displayProducts.map((p) => {

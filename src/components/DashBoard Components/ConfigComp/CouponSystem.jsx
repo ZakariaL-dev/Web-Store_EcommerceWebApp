@@ -19,7 +19,6 @@ const CouponSystem = () => {
         editingCoupon={editingCoupon}
         setEditingCoupon={setEditingCoupon}
       />
-
       <CouponsDisplay setEditingCoupon={setEditingCoupon} />
     </div>
   );

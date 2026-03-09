@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
 const page = async ({ params }) => {
   const { slug } = await params;
   return (
-    <div className="mt-24 mb-6 px-6">
+    <div className="mb-6 px-6">
       <StoreProductPageWrapper slug={slug} />
     </div>
   );

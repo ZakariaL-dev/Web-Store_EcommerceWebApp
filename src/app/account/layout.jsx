@@ -48,7 +48,7 @@ export default async function RootLayout({ children }) {
 
         <StoreNavBar user={session?.user} />
         <AccountUserWrapper email={session?.user?.id}>
-          <main className="w-full flex gap-5 items-start mt-24 max-w-7xl mx-auto mb-6">
+          <main className="w-full flex gap-5 items-start mt-5 max-w-7xl mx-auto mb-6">
             <AccountSideBar user={session?.user} />
             {children}
           </main>

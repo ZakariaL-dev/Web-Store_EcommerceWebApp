@@ -18,7 +18,7 @@ const page = async ({ searchParams }) => {
   const t = params.t;
 
   return (
-    <div className="w-full mt-24 max-w-7xl mx-auto mb-6">
+    <div className="w-full max-w-7xl mx-auto mb-6">
       {t === "use" ? `Terms of Use` : `Returns & Delivery Policy`}
     </div>
   );

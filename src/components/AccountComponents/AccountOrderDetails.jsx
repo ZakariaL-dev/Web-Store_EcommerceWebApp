@@ -117,7 +117,7 @@ const AccountOrderDetails = ({ order, cancel }) => {
       <header className="text-4xl font-bold">Order Details</header>
       {/* order details */}
       <main className="w-full bg-slate-100 rounded-2xl p-3 shadow-md">
-        <div className="flex items-center justify-between ">
+        <div className="grid md:grid-cols-[3fr_1fr] grid-cols-1">
           {/* order is and date */}
           <div>
             <h1 className="font-bold text-xl">Order #{order._id.slice(-6)}</h1>

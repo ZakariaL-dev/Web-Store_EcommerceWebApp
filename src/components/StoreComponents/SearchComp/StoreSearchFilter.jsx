@@ -37,6 +37,14 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 const StoreSearchFilter = () => {
   const searchParams = useSearchParams();
   const categories = ["Man", "Woman", "Kids", "Accessories"];
+  const sortings = [
+    "From A-Z",
+    "From Z-A",
+    "Newest First",
+    "Oldest First",
+    "Cheapest First",
+    "Expensive First",
+  ];
   const { OpenFilters, setOpenFilters } = useContext(FiltersToggleContext);
   const { config } = useConfigureStore();
 
@@ -44,10 +52,12 @@ const StoreSearchFilter = () => {
     config.filters.priceRange.min,
     config.filters.priceRange.max,
   ]);
+  const [sortBy, setSortBy] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(
     searchParams.get("category") || "all",
   );
   const [selectedColors, setSelectedColors] = useState([]);
+
   const [selectedSizes, setSelectedSizes] = useState([]);
 
   // --- 2. The Reset Function ---
@@ -56,6 +66,7 @@ const StoreSearchFilter = () => {
     setSelectedCategory("all");
     setSelectedColors([]);
     setSelectedSizes([]);
+    setSortBy("");
   };
 
   // Helper to toggle items in arrays (Colors/Sizes)
@@ -171,6 +182,30 @@ const StoreSearchFilter = () => {
               />
             </AccordionContent>
           </AccordionItem>
+          {/* sortings */}
+          <AccordionItem value="sorting" className="md:hidden block">
+            <AccordionTrigger>Sort by:</AccordionTrigger>
+            <AccordionContent>
+              <RadioGroup value={sortBy} onValueChange={setSortBy}>
+                {/* <div className="flex items-center gap-3 w-full my-1 ml-2">
+                  <RadioGroupItem id="all" value="all" />
+                  <Label htmlFor="all">ALL</Label>
+                </div> */}
+                {sortings.map((s, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 w-full my-1 ml-2"
+                    >
+                      <RadioGroupItem value={s} id={s} />
+                      <Label htmlFor={s}>{s}</Label>
+                    </div>
+                  );
+                })}
+              </RadioGroup>
+            </AccordionContent>
+          </AccordionItem>
+          {/*  */}
           <AccordionItem value="category">
             <AccordionTrigger>Category</AccordionTrigger>
             <AccordionContent>

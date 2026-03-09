@@ -87,12 +87,18 @@ const CouponAddForm = ({ editingCoupon, setEditingCoupon }) => {
             }
           />
           <Button
-            className="bg-gray-400 hover:bg-gray-600 text-sm absolute right-0"
+            className="bg-gray-400 hover:bg-gray-600 text-sm absolute right-0 md:inline hidden"
             onClick={GenerateRandomCode}
           >
             Generate Code
           </Button>
         </div>
+        <Button
+          className="bg-gray-400 hover:bg-gray-600 text-sm block md:hidden mt-2 w-full"
+          onClick={GenerateRandomCode}
+        >
+          Generate Code
+        </Button>
       </div>
 
       <div>

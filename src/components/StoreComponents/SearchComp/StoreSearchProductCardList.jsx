@@ -114,7 +114,7 @@ const StoreSearchProductCardList = ({ product }) => {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className={`w-full m-4 h-64 flex rounded-2xl overflow-hidden transition-all duration-200 ease-in-out hover:shadow-xl`}
+      className={`w-full mb-3 h-64 flex rounded-2xl overflow-hidden transition-all duration-200 ease-in-out hover:shadow-xl border-2 group`}
     >
       <div className="relative overflow-hidden w-40">
         <Image
@@ -123,7 +123,7 @@ const StoreSearchProductCardList = ({ product }) => {
           )}
           alt="product"
           fill
-          className="object-cover rounded-l-2xl transition-all ease-in-out hover:scale-115"
+          className="object-cover rounded-l-2xl transition-all ease-in-out group-hover:scale-115"
         ></Image>
         {product.status === "new" ? (
           <Badge className="absolute top-1 left-1">New</Badge>
@@ -139,7 +139,7 @@ const StoreSearchProductCardList = ({ product }) => {
       <div className="p-3 flex flex-col justify-around w-full bg-white">
         <div>
           <h1 className="text-xl mb-1 font-bold">{product.title}</h1>
-          <h1 className="text-sm mb-4">{product.description}</h1>
+          <h1 className="md:text-sm text-xs mb-4">{product.description}</h1>
 
           {/*  */}
           {product.status === "on sale" ? (

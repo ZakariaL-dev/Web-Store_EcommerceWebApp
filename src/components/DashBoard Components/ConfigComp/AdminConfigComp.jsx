@@ -50,7 +50,10 @@ const AdminConfigComp = () => {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList variant="line">
+        <TabsList
+          variant="line"
+          className="flex w-full overflow-x-auto overflow-y-hidden whitespace-nowrap border-b scrollbar-hide justify-start sm:justify-center"
+        >
           <TabsTrigger value="coupon">
             <RiDiscountPercentLine />
             Coupon System
@@ -80,19 +83,19 @@ const AdminConfigComp = () => {
           <CouponSystem />
         </TabsContent>
         <TabsContent className="p-2" value="banners">
-          <MainBanner/>
+          <MainBanner />
         </TabsContent>
         <TabsContent className="p-2" value="events">
-          <Events/>
+          <Events />
         </TabsContent>
         <TabsContent className="p-2" value="delivery">
           <DeliverySystem />
         </TabsContent>
         <TabsContent className="p-2" value="contents">
-          <PagesContent/>
+          <PagesContent />
         </TabsContent>
         <TabsContent className="p-2" value="filters">
-          <SearchFilters/>
+          <SearchFilters />
         </TabsContent>
       </Tabs>
     </div>

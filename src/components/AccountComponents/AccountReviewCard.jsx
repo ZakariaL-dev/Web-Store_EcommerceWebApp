@@ -24,7 +24,6 @@ import { useReviewStore } from "@/utils/ReviewStore";
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
 
-
 const AccountReviewCard = ({ r }) => {
   const { deleteReview } = useReviewStore();
 
@@ -55,9 +54,14 @@ const AccountReviewCard = ({ r }) => {
         <header className="flex items-start justify-between w-full">
           <div>
             <h1 className="font-bold text-xl">{r.title}</h1>
-            <p className="font-semibold mb-4">{r.timeOfSubmit}</p>
+            
+            <p className="font-semibold mb-4">{r.timeOfSubmit}</p><div className="md:hidden block my-1.5">
+              <Rating value={r.rating} readOnly />
+            </div>
           </div>
-          <Rating value={r.rating} readOnly />
+          <div className="md:block hidden">
+            <Rating value={r.rating} readOnly />
+          </div>
         </header>
         <main className="text-wrap whitespace-normal">{r.comment}</main>
         <footer className="flex gap-1 items-center justify-end w-full mt-4">

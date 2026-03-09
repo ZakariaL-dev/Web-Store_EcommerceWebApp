@@ -70,7 +70,7 @@ const DashOrderCard = ({ order }) => {
   };
 
   return (
-    <div className="border-b-2 odd:border-r-2 w-[50%] [&:nth-last-child(-n+2)]:border-b-0">
+    <div className="border-b-2 md:odd:border-r-2 border-r-0 md:[&:nth-last-child(-n+2)]:border-b-0 last:border-b-0">
       <div className="flex p-3 items-start ">
         <div className="w-1/3 mr-5">
           <h1 className="font-bold">#order n°{order._id.slice(-6)}</h1>

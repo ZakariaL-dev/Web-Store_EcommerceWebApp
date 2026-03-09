@@ -19,8 +19,8 @@ const DashStockCard = ({ stock }) => {
       ></Image>
       <div className="w-full">
         <div className="flex justify-between w-full mb-2">
-          <h1 className="font-semibold">{stock.title}</h1>
-          <h1 className="font-mono">{stock.price} Dz</h1>
+          <h1 className="font-semibold text-sm">{stock.title}</h1>
+          <h1 className="font-mono text-sm">{stock.price} Dz</h1>
         </div>
         <div className="w-full">
           {stock.lowStockVariants.map((v) => (

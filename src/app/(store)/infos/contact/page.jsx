@@ -9,7 +9,7 @@ export const metadata = {
 
 const page = () => {
   return (
-    <div className="w-full mt-24 max-w-7xl mx-auto mb-6 paddingfix">
+    <div className="w-full max-w-7xl mx-auto mb-6 paddingfix">
       <header className="flex flex-col items-center gap-2 mb-10">
         <h1 className="text-3xl font-bold">Get In Touch</h1>
         <p className="text-lg text-center text-gray-600 max-w-3xl mx-auto">

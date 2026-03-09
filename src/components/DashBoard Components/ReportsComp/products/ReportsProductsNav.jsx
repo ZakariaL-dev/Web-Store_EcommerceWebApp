@@ -62,7 +62,7 @@ const ReportsProductsNav = () => {
 
   return (
     <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/4">
+      <div className="max-w-1/5 md:flex hidden">
         <InputGroup>
           <InputGroupInput placeholder="Search Product" />
           <InputGroupAddon>
@@ -74,10 +74,10 @@ const ReportsProductsNav = () => {
         </InputGroup>
       </div>
       <div className="flex items-center gap-2.5">
-        <Button variant="outline">
+        {/* <Button variant="outline">
           <FaFilter />
           Filter
-        </Button>
+        </Button> */}
         <NativeSelect value={itemsPerPage} onChange={handleItemsPerPageChange}>
           <NativeSelectOption value="10">10</NativeSelectOption>
           <NativeSelectOption value="20">20</NativeSelectOption>
@@ -85,7 +85,7 @@ const ReportsProductsNav = () => {
           <NativeSelectOption value="40">40</NativeSelectOption>
           <NativeSelectOption value="50">50</NativeSelectOption>
         </NativeSelect>
-        <p>Per page </p>
+        <p className="md:block hidden">Per page </p>
         <Input
           type="number"
           alue={currentPage}

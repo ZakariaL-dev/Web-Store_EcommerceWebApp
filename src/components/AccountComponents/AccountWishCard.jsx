@@ -17,7 +17,6 @@ import { useCartStore } from "@/utils/CartStore";
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
 
-
 const AccountWishCard = ({ product, onRemove }) => {
   const { addToCart } = useCartStore();
   const { currentUser } = useUserStore();
@@ -46,8 +45,8 @@ const AccountWishCard = ({ product, onRemove }) => {
     setAddLoad(false);
   };
   return (
-    <div className="flex items-start justify-between p-3 border-b-2 border-slate-200">
-      <div className="flex items-start gap-4">
+    <div className="grid md:grid-cols-[4fr_1fr] grid-cols-1 p-3 border-b-2 border-slate-200">
+      <div className="flex items-start gap-4 w-full">
         <Image
           src={product.previewImages[0]}
           alt={product.title}
@@ -56,45 +55,96 @@ const AccountWishCard = ({ product, onRemove }) => {
           className="rounded-lg"
         ></Image>
         <div>
-          <h1 className="text-2xl font-semibold mb-2">{product.title}</h1>
-          <p className="text-lg text-gray-500 mb-3">{product.description}</p>
-          <div className="flex items-center gap-3">
+          <h1 className="md:text-2xl text-lg font-semibold mb-2 ">
+            {product.title}
+          </h1>
+          <p className="md:text-lg text-2xs text-gray-500 mb-3">
+            {product.description}
+          </p>
+          {/* bigger screens */}
+          <Button
+            className="py-5 md:flex gap-3 items-center hidden"
+            disabled={addLoad}
+            onClick={handleAddtoCart}
+          >
             {addLoad ? (
-              <Button className="py-5 flex gap-3 items-center" disabled={true}>
+              <>
                 <Spinner /> Moving to Cart ....
-              </Button>
+              </>
             ) : (
-              <Button className="py-5" onClick={handleAddtoCart}>
-                Move to Cart
-              </Button>
+              "Move to Cart"
+            )}
+          </Button>
+          {/* smaller screens */}
+          <div className="md:hidden block">
+            {product.status === "on sale" ? (
+              <div className="space-x-4 ">
+                <span className="font-bold line-through text-slate-300">
+                  {product.price} Dz
+                </span>
+                <span className="font-bold text-red-700">
+                  {(
+                    product.price -
+                    (product.price * product.discount) / 100
+                  ).toFixed(2)}{" "}
+                  Dz
+                </span>
+              </div>
+            ) : (
+              <p className="font-bold text-gray-500">{product.price} Dz</p>
             )}
           </div>
         </div>
       </div>
-      {/*  */}
-      <div className="text-right">
+      {/* bigger screens */}
+      <div className="text-right w-full md:block hidden">
         {product.status === "on sale" ? (
-          <div className="flex gap-4">
-            <p className="mb-3 font-bold line-through text-slate-300">
+          <div className="space-x-4 ">
+            <span className="font-bold line-through text-slate-300">
               {product.price} Dz
-            </p>
-            <p className="mb-3 font-bold text-red-700">
+            </span>
+            <span className="font-bold text-red-700">
               {(
                 product.price -
                 (product.price * product.discount) / 100
               ).toFixed(2)}{" "}
               Dz
-            </p>
+            </span>
           </div>
         ) : (
-          <p className="mb-3 font-bold text-gray-500">{product.price} Dz</p>
+          <p className="font-bold text-gray-500 text-right">
+            {product.price} Dz
+          </p>
         )}
         <Button
           variant={"ghost"}
-          className="text-red-800 hover:text-red-600 hover:bg-red-100"
+          className="text-red-800 hover:text-red-600 hover:bg-red-100 mt-2.5"
           onClick={onRemove}
         >
           Remove
+        </Button>
+      </div>
+      {/* smaller screens */}
+      <div className="grid grid-cols-2 md:hidden mt-3 gap-4">
+        <Button
+          variant={"ghost"}
+          className="text-red-800 bg-red-100 hover:text-red-600 hover:bg-red-200 py-5"
+          onClick={onRemove}
+        >
+          Remove
+        </Button>
+        <Button
+          className="py-5 md:flex gap-3 items-center"
+          disabled={addLoad}
+          onClick={handleAddtoCart}
+        >
+          {addLoad ? (
+            <>
+              <Spinner /> Moving to Cart ....
+            </>
+          ) : (
+            "Move to Cart"
+          )}
         </Button>
       </div>
     </div>
