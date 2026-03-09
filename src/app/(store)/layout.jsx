@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import StoreNavBar from "@/components/StoreComponents/NavComp/StoreNavBar";
 import StoreFooter from "@/components/StoreComponents/NavComp/StoreFooter";
 import UserSync from "@/components/StoreComponents/UserSync";
+import StoreAdminRedirect from "@/components/StoreComponents/StoreAdminRedirect";
 
 // Shadcn Comp
 import { Toaster } from "@/components/ui/sonner";
@@ -42,11 +43,9 @@ export default async function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserSync id={session?.user?.id} />
-
+        <StoreAdminRedirect />
         <StoreNavBar user={session?.user} />
-
-        <main className="w-full">{children}</main>
-
+        <main className="w-full mt-5">{children}</main>
         <StoreFooter user={session?.user} />
         <Toaster position="top-right" />
       </body>

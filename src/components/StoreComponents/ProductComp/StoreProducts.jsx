@@ -67,7 +67,7 @@ const StoreProducts = () => {
             />
           </Button>
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] md:flex hidden">
               <SelectValue placeholder="Sort" />
             </SelectTrigger>
             <SelectContent>
@@ -84,7 +84,7 @@ const StoreProducts = () => {
         </div>
         <div className="flex items-center gap-5">
           <NativeSelect
-            className="w-24 md:block hidden"
+            className="w-24"
             value={limit}
             onChange={(e) => setLimit(e.target.value)}
           >

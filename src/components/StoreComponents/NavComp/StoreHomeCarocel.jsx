@@ -38,13 +38,12 @@ const StoreHomeCarocel = () => {
   }, [nextSlide]);
 
   return (
-    /* 1. Changed height to be responsive (h-auto) and added aspect ratio */
-    <div className="w-11/12 relative mx-auto mb-8 rounded-2xl overflow-hidden group aspect-2/1 md:aspect-3/1 lg:aspect-4/1 h-[400px]">
+    <div className="md:w-full w-11/12 relative mx-auto mb-8 rounded-2xl overflow-hidden group md:h-[500px] aspect-video">
       <div className="w-full h-full relative">
         {ImageCarocel.map((image, index) => (
           <div
             key={image.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-1000 rounded-2xl ${
               active === index ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -52,8 +51,7 @@ const StoreHomeCarocel = () => {
               src={image.pic}
               alt={"Slide " + image.id}
               fill
-              // 2. Changed to object-cover to ensure the div is filled
-              className="object-cover "
+              className="object-cover aspect-video rounded-2xl"
               priority={index === 0}
             />
           </div>
@@ -61,7 +59,7 @@ const StoreHomeCarocel = () => {
       </div>
 
       {/* Navigation Arrows - Only show on hover for cleaner look */}
-      <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity mx-1.5">
         <Button
           variant="ghost"
           className="rounded-full bg-white/20 hover:bg-white/40 p-2"

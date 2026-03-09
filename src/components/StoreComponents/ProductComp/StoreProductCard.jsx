@@ -116,7 +116,7 @@ const StoreProductCard = ({ product }) => {
           <></>
         )}
       </div>
-      <div className="absolute w-full bottom-0 pt-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white h-20">
+      <div className="absolute w-full pt-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white md:h-20 bottom-0">
         <h1 className="text-[15px] mb-1 font-bold px-3">{product.title}</h1>
         {/*  */}
         {product.status === "on sale" ? (
@@ -137,7 +137,7 @@ const StoreProductCard = ({ product }) => {
             {product.price} Dz
           </p>
         )}
-        <div className="flex gap-3 items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full bg-white h-full p-3">
+        <div className="flex gap-3 items-center justify-between md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full bg-white h-full p-3 opacity-100">
           <Button
             variant="outline"
             onClick={(e) => {

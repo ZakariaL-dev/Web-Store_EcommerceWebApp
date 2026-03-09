@@ -39,7 +39,7 @@ export function AccountDeleteDialogue({
         </div>
         <DialogFooter className="sm:justify-between ">
           <DialogClose asChild>
-            <Button type="button" variant="secondary" className={"w-[43%]"}>
+            <Button type="button" variant="secondary" className={"md:w-[43%]"}>
               Close
             </Button>
           </DialogClose>
@@ -47,7 +47,7 @@ export function AccountDeleteDialogue({
             type="submit"
             disabled={loading}
             onClick={Delete}
-            className={"bg-red-600 hover:bg-red-400 w-[57%]"}
+            className={"bg-red-600 hover:bg-red-400 md:w-[57%]"}
           >
             {loading ? (
               <div className="flex items-center gap-2">

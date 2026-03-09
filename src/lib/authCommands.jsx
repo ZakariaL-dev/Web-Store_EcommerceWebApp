@@ -22,10 +22,12 @@ export async function logout() {
   await signOut({ redirectTo: "/" });
 }
 
-export async function loginWithCredentials(email, password) {
+export async function loginWithCredentials(email, password, role) {
+  const destination = role === "admin" ? "/admin/dashboard" : "/";
+
   await signIn("credentials", {
     email,
     password,
-    redirectTo: "/",
+    redirectTo: destination,
   });
 }

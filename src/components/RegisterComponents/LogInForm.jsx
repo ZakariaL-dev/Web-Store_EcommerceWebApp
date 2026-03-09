@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 
 // React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // React Icons
 import { LuEyeClosed, LuEye } from "react-icons/lu";
@@ -18,12 +18,25 @@ import { FaGoogle } from "react-icons/fa";
 import { loginWithGoogle, loginWithCredentials } from "@/lib/authCommands";
 import { HandeResults } from "@/lib/HandeResults";
 
-
-const LogInForm = () => {
-  const [LoginForm, setLoginForm] = useState({
+const LogInForm = ({ role }) => {
+  const defaultFormData = {
     email: "",
     password: "",
-  });
+  };
+  const adminFormData = {
+    email: "adminOwner@example.com",
+    password: "adminOwner2027",
+  };
+  const [LoginForm, setLoginForm] = useState(defaultFormData);
+
+  useEffect(() => {
+    if (role === "admin") {
+      setLoginForm(adminFormData);
+    } else {
+      setLoginForm(defaultFormData);
+    }
+  }, [role]);
+
   const [passSee, setPassSee] = useState("password");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -34,7 +47,7 @@ const LogInForm = () => {
     setLoading(true);
 
     try {
-      await loginWithCredentials(LoginForm.email, LoginForm.password);
+      await loginWithCredentials(LoginForm.email, LoginForm.password, role);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "An unexpected error occurred";

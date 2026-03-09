@@ -67,12 +67,12 @@ const DashTodayDetails = () => {
     <div className="mb-8">
       <h2 className="font-bold text-xl mb-2.5">Today&apos;s Details</h2>
 
-      <div className="border-2  rounded-lg">
-        <header className="flex flex-wrap justify-around items-center gap-5 border-b-2">
+      <div className="border-2 rounded-lg">
+        <header className="grid md:grid-cols-3 border-b-2">
           {Todaydetails.map((c, i) => (
             <div
               key={i}
-              className="flex items-center gap-5 p-4 rounded-md w-[30%]"
+              className="flex items-center gap-5 p-4 rounded-md w-full "
             >
               <c.icon
                 size={40}
@@ -86,7 +86,7 @@ const DashTodayDetails = () => {
             </div>
           ))}
         </header>
-        <main className="flex flex-wrap justify-between ">
+        <main className="grid grid-cols-1 md:grid-cols-2">
           {TodayOrders.map((to) => {
             return <DashOrderCard key={to._id} order={to} />;
           })}

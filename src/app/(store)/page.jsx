@@ -4,7 +4,7 @@ import StorePage from "@/components/StoreComponents/ProductComp/StorePage";
 
 export default async function Home() {
   return (
-    <div className="mt-20 w-full">
+    <div className="w-full">
       <StoreHomeCarocel />
       <StorePage />
     </div>

@@ -167,7 +167,7 @@ const AccountReports = () => {
   return (
     <>
       <header className="flex items-center justify-between mb-5">
-        <h1 className="text-4xl font-bold">
+        <h1 className="lg:text-4xl text-2xl font-bold">
           Total Reports:{" "}
           <span className="text-gray-400">{filteredReports.length}</span>
         </h1>
@@ -184,10 +184,10 @@ const AccountReports = () => {
         </NativeSelect>
       </header>
       {/* card counts */}
-      <div className="flex gap-4 mb-6">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-4 mb-6">
         {reportsCount.map((rc, i) => {
           return (
-            <Card key={i} className="w-full max-w-xs">
+            <Card key={i} className="w-full">
               <CardHeader>
                 <CardTitle>{rc.title}</CardTitle>
                 <CardDescription className="text-2xl font-bold">

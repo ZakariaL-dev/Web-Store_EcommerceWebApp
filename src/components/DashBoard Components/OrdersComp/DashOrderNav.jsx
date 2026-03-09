@@ -25,7 +25,6 @@ import { useOrderStore } from "@/utils/OrderStore";
 // React
 import { useEffect, useState } from "react";
 
-
 const DashOrderNav = () => {
   const { orders, getAllOrders } = useOrderStore();
 
@@ -72,7 +71,7 @@ const DashOrderNav = () => {
   }
   return (
     <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/5">
+      <div className="max-w-1/5 md:flex hidden">
         <InputGroup>
           <InputGroupInput placeholder="Search Order" />
           <InputGroupAddon>
@@ -84,18 +83,21 @@ const DashOrderNav = () => {
         </InputGroup>
       </div>
       <div className="flex items-center gap-2.5">
-        <Button variant="outline">
+        {/* <Button variant="outline">
           <FaFilter />
           Filter
-        </Button>
-        <NativeSelect value={itemsPerPage} onChange={handleItemsPerPageChange}>
-          <NativeSelectOption value="10">10</NativeSelectOption>
-          <NativeSelectOption value="20">20</NativeSelectOption>
-          <NativeSelectOption value="30">30</NativeSelectOption>
-          <NativeSelectOption value="40">40</NativeSelectOption>
-          <NativeSelectOption value="50">50</NativeSelectOption>
-        </NativeSelect>
-        <p>Per page </p>
+        </Button> */}
+          <NativeSelect
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+          >
+            <NativeSelectOption value="10">10</NativeSelectOption>
+            <NativeSelectOption value="20">20</NativeSelectOption>
+            <NativeSelectOption value="30">30</NativeSelectOption>
+            <NativeSelectOption value="40">40</NativeSelectOption>
+            <NativeSelectOption value="50">50</NativeSelectOption>
+          </NativeSelect>
+          <p className="md:block hidden">Per page </p>
         <Input
           type="number"
           value={currentPage}

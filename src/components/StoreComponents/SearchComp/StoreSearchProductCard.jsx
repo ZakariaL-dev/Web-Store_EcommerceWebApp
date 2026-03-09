@@ -92,7 +92,7 @@ const StoreSearchProductCard = ({ product }) => {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className=" m-4 border-2 border-gray-300 w-full overflow-hidden rounded-2xl h-[388px] transition-all ease-in-out hover:shadow-xl group flex flex-col"
+      className="border-2 border-gray-300 w-full overflow-hidden rounded-2xl h-[388px] transition-all ease-in-out hover:shadow-xl group flex flex-col"
     >
       <div className="relative h-full">
         <Image
@@ -109,7 +109,7 @@ const StoreSearchProductCard = ({ product }) => {
         )}
       </div>
 
-      <div className="p-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white z-10 h-20">
+      <div className="p-3 transition-all ease-in-out md:group-hover:-translate-y-14 bg-white z-10 md:h-20 h-36">
         <h1 className="text-lg mb-1 font-bold truncate">{product.title}</h1>
         {product.status === "on sale" ? (
           <div className="flex gap-4">
@@ -127,7 +127,7 @@ const StoreSearchProductCard = ({ product }) => {
         ) : (
           <p className="mb-3 font-bold text-gray-500">{product.price} Dz</p>
         )}
-        <div className="flex gap-3 items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="flex gap-3 items-center justify-between md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 opacity-100">
           <Button
             variant="outline"
             onClick={(e) => {

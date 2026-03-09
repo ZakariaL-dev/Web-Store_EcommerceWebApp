@@ -5,7 +5,7 @@ export const metadata = {
 
 const page = () => {
   return (
-    <div className="w-full mt-24 max-w-7xl mx-auto mb-6">Customer Service</div>
+    <div className="w-full max-w-7xl mx-auto mb-6">Customer Service</div>
   );
 };
 

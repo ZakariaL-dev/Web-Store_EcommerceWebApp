@@ -12,7 +12,6 @@ import { AiFillProduct } from "react-icons/ai";
 // React
 import { useState } from "react";
 import DashStatsCard from "./DashStatsCard";
-import DashStockCard from "./DashStockCard";
 import DashTopSaleCard from "./DashTopSaleCard";
 import DashTodayDetails from "./DashTodayDetails";
 import DashStockNotify from "./DashStockNotify";
@@ -54,19 +53,23 @@ const DashMainPage = () => {
       : "Select Date Range";
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-center mb-5">
+    <div className="w-full mr-2.5">
+      <div className="flex justify-between items-center sm:flex-nowrap flex-wrap gap-5 mb-5">
         <div>
           <h1 className="font-bold text-3xl">DashBoard</h1>
           <p className="text-md">
             Quickly Review what is going on in your store
           </p>
         </div>
-        <div className="flex gap-2 items-center">
-          from:
-          <DashDate selected={fromDate} onDateChange={setFromDate} />
-          to:
-          <DashDate selected={toDate} onDateChange={setToDate} />
+        <div className="flex gap-2 items-center font-medium">
+          <span className="md:flex grid items-center gap-1.5">
+            from:
+            <DashDate selected={fromDate} onDateChange={setFromDate} />
+          </span>
+          <span className="md:flex grid items-center gap-1.5">
+            to:
+            <DashDate selected={toDate} onDateChange={setToDate} />
+          </span>
         </div>
       </div>
       {/*  */}
@@ -76,7 +79,7 @@ const DashMainPage = () => {
             <h2 className="font-bold">Overall Details</h2>
             <p className="text-md text-gray-400">{dateRangeDisplay}</p>
           </div>
-          <div className="grid grid-cols-4 gap-5 mt-2.5 w-full">
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-5 mt-2.5 w-full">
             {Totaldetails.map((c, i) => (
               <DashStatsCard className="" key={c.id || i} detail={c} />
             ))}
@@ -85,7 +88,7 @@ const DashMainPage = () => {
         {/*  */}
         <DashTodayDetails />
         {/*  */}
-        <div className="mb-8 grid grid-cols-2 gap-5">
+        <div className="mb-8 grid md:grid-cols-2 grid-cols-1 gap-2.5">
           <DashStockNotify />
           <div className="border-2 rounded-lg pt-2">
             <div className="flex items-center justify-between mb-2.5 px-5 ">

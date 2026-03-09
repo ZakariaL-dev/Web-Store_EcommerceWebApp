@@ -72,7 +72,7 @@ const StoreNavBar = ({ user }) => {
 
   return (
     <>
-      <nav className="flex items-center justify-between px-6 py-3 border-b-2 fixed top-0 left-0 right-0 bg-white z-50">
+      <nav className="flex items-center justify-between px-6 py-3 border-b-2 sticky top-0 left-0 right-0 bg-white z-50">
         <div className="flex items-center gap-2.5">
           <Button variant="ghost" className="p-2 lg:hidden" asChild>
             {openMiniNav === false ? (
@@ -119,11 +119,11 @@ const StoreNavBar = ({ user }) => {
                     <IoIosHeartEmpty />
                   </Link>
                 </Button>
-                <Button variant="ghost" className={"w-8 h-8"} asChild>
+                {/* <Button variant="ghost" className={"w-8 h-8"} asChild>
                   <Link href="/account/compare">
                     <MdCompareArrows />
                   </Link>
-                </Button>
+                </Button> */}
                 <Button
                   variant="ghost"
                   className="p-1 w-10 h-10"
