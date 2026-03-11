@@ -19,6 +19,7 @@ const DashStockNotify = () => {
         return {
           id: product._id,
           title: product.title,
+          slug: product.slug,
           price: product.price,
           imgs: product.previewImages,
           lowStockVariants: lowStockVariants,
@@ -27,8 +28,6 @@ const DashStockNotify = () => {
       return null;
     })
     .filter((p) => p !== null);
-
-  console.log("OutOfproducts: ", AlmostOutOfStock);
 
   return (
     <div className="border-2 rounded-lg pt-2 overflow-hidden">
