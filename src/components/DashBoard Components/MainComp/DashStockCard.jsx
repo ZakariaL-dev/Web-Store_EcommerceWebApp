@@ -1,13 +1,17 @@
+"use client";
 // Shadcn Comp
 import { Button } from "@/components/ui/button";
 
 // Next
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 // React Icons
 import { FaCaretRight } from "react-icons/fa6";
 
 const DashStockCard = ({ stock }) => {
+  const router = useRouter();
+  
   return (
     <div className="flex justify-between border-b-2 px-3 py-4 last:border-b-0">
       <Image
@@ -38,7 +42,12 @@ const DashStockCard = ({ stock }) => {
           ))}
         </div>
       </div>
-      <Button variant="ghost" className="p-2 ml-4" asChild>
+      <Button
+        variant="ghost"
+        className="p-2 ml-4"
+        onClick={() => router.push(`/admin/dashboard/products/${stock.slug}`)}
+        asChild
+      >
         <FaCaretRight className="w-10 h-10" />
       </Button>
     </div>

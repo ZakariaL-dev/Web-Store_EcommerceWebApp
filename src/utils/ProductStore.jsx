@@ -111,7 +111,9 @@ export const useProductStore = create((set) => {
           return { success: true };
         }
       } catch (error) {
-        set({ products: [] });
+        set({
+          products: { new: [], normal: [], "on sale": [], all: [] },
+        });
         return {
           success: false,
           message: `Error in getting all products: ${error}`,
@@ -148,7 +150,9 @@ export const useProductStore = create((set) => {
         }
         return { success: false, message: Data.message };
       } catch (error) {
-        set({ products: [] });
+        set({
+          products: { new: [], normal: [], "on sale": [], all: [] },
+        });
         return {
           success: false,
           message: `Error in getting the product: ${error}`,
@@ -180,11 +184,20 @@ export const useProductStore = create((set) => {
       });
       const Data = await res.json();
       if (!Data) return { success: false, message: Data.message };
-      set((state) => ({
-        products: state.products.map((p) =>
-          p._id === pId ? Data.Products : p,
-        ),
-      }));
+      set((state) => {
+        const updatedProducts = { ...state.products };
+
+        // Iterate over each category (all, new, normal, etc.)
+        Object.keys(updatedProducts).forEach((category) => {
+          if (Array.isArray(updatedProducts[category])) {
+            updatedProducts[category] = updatedProducts[category].map((p) =>
+              p._id === pId ? Data.Products : p,
+            );
+          }
+        });
+
+        return { products: updatedProducts };
+      });
       return { success: Data.success, message: Data.message };
     },
   };

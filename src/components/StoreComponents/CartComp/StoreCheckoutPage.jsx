@@ -241,10 +241,9 @@ const StoreCheckoutPage = () => {
       });
       await Promise.all(ProductQntDecreace);
 
-      const clearCartPromises = checkout.map((item) =>
-        removeFromCart(userId, item._id),
-      );
-      await Promise.all(clearCartPromises);
+      for (const item of checkout) {
+        await removeFromCart(userId, item._id);
+      }
 
       await syncToCheckout(userId, []);
 

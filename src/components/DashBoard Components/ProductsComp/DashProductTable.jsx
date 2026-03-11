@@ -174,7 +174,9 @@ const DashProductTable = () => {
                       variant="ghost"
                       className="p-2 hover:bg-gray-200 "
                       asChild
-                      onClick={() => router.push(`/products/${p.slug}`)}
+                      onClick={() =>
+                        router.push(`/admin/dashboard/products/${p.slug}`)
+                      }
                     >
                       <FaCaretRight className="w-9 h-9" />
                     </Button>
