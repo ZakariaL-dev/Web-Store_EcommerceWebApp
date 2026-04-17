@@ -102,6 +102,11 @@ const UserSchema = new mongoose.Schema(
         quantity: { type: Number, default: 1 },
       },
     ],
+
+    blocked: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

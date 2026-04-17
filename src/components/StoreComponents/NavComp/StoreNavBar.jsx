@@ -119,11 +119,6 @@ const StoreNavBar = ({ user }) => {
                     <IoIosHeartEmpty />
                   </Link>
                 </Button>
-                {/* <Button variant="ghost" className={"w-8 h-8"} asChild>
-                  <Link href="/account/compare">
-                    <MdCompareArrows />
-                  </Link>
-                </Button> */}
                 <Button
                   variant="ghost"
                   className="p-1 w-10 h-10"

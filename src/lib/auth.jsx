@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           await connectDB();
 
           const user = await User.findOne({ email: credentials.email }).select(
-            "+password"
+            "+password",
           );
 
           if (!user) {
@@ -33,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const isValid = await bcrypt.compare(
             credentials.password,
-            user.password
+            user.password,
           );
 
           if (!isValid) {
@@ -45,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             name: user.userName,
             role: user.role,
+            blocked: user.blocked,
           };
         } catch (error) {
           console.error("Credentials authorize error:", error);
@@ -73,15 +74,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               phoneNumber: "",
               password: await bcrypt.hash(
                 Math.random().toString(36).slice(-12) + "Aa1!",
-                10
+                10,
               ),
               provider: "google",
               providerId: account.providerAccountId,
               isEmailVerified: true,
               role: "user",
+              blocked: false,
             });
-            user.mongoId = newUser._id.toString();
-            user.role = newUser.role;
           } else {
             if (!existingUser.providerId && account?.providerAccountId) {
               existingUser.providerId = account.providerAccountId;
@@ -92,7 +92,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           user.mongoId = existingUser._id.toString();
           user.role = existingUser.role;
-
+          user.blocked = existingUser.blocked;
+          
           return true;
         } catch (error) {
           console.error("=== ERROR in signIn callback ===");
@@ -105,15 +106,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user, account }) {
-      // First time JWT is created (sign in)
       if (user) {
-        if (account?.provider === "google") {
-          token.id = user.mongoId;
-          token.role = user.role;
-        } else {
-          token.id = user.id;
-          token.role = user.role;
-        }
+        // 1. Handle the ID based on provider
+        token.id = account?.provider === "google" ? user.mongoId : user.id;
+        token.role = user.role;
+        token.blocked = user.blocked;
       }
 
       return token;
@@ -122,6 +119,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token) {
         session.user.id = token.id;
         session.user.role = token.role;
+        session.user.blocked = token.blocked;
       }
 
       return session;

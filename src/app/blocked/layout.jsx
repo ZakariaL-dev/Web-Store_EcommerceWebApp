@@ -3,15 +3,13 @@ import "@/app/globals.css";
 
 // My Components
 import StoreNavBar from "@/components/StoreComponents/NavComp/StoreNavBar";
-import StoreFooter from "@/components/StoreComponents/NavComp/StoreFooter";
 import UserSync from "@/components/StoreComponents/UserSync";
-import StoreAdminRedirect from "@/components/StoreComponents/StoreAdminRedirect";
-
-// Shadcn Comp
-import { Toaster } from "@/components/ui/sonner";
 
 // Utils
 import { auth } from "@/lib/auth";
+
+// Shadcn Comp
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +24,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: {
     default: "Web Store",
-    template: "%s | Web Store",
+    template: " %s | Web Store",
   },
   description: "An Ecommerce website demo",
   icons: {
@@ -44,10 +42,8 @@ export default async function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserSync id={session?.user?.id} />
-        <StoreAdminRedirect />
-        <StoreNavBar user={session?.user} />
-        <main className="w-full mt-5">{children}</main>
-        <StoreFooter user={session?.user} />
+
+        {children}
         <Toaster position="top-right" />
       </body>
     </html>

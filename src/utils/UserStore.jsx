@@ -144,5 +144,29 @@ export const useUserStore = create((set) => {
       }));
       return { success: Data.success, message: Data.message };
     },
+    toggleBlockUser: async (Uid) => {
+      try {
+        const res = await fetch(`/api/users/${Uid}?BlockStatus`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const Data = await res.json();
+
+        if (!res.ok) return { success: false, message: Data.message };
+
+        set((state) => ({
+          Users: state.Users.map((u) => (u._id === Uid ? Data.UserData : u)),
+        }));
+        return { success: Data.success, message: Data.message };
+      } catch (error) {
+        return {
+          success: false,
+          message: `An unexpected error occurred in toggling block status: ${error.message}`,
+        };
+      }
+    },
   };
 });

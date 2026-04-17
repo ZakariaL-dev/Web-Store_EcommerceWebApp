@@ -21,7 +21,7 @@ import { useOrderStore } from "@/utils/OrderStore";
 import { useEffect } from "react";
 
 // React Icons
-import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdOutlineLockOpen } from "react-icons/md";
 import { TbLockCancel } from "react-icons/tb";
 
 // Utils
@@ -29,7 +29,7 @@ import { HandeResults } from "@/lib/HandeResults";
 import DashAlertDelete from "../DashAlertDelete";
 
 const DashCustomersTable = () => {
-  const { Users, getAllUsers, deleteUser } = useUserStore();
+  const { Users, getAllUsers, deleteUser, toggleBlockUser } = useUserStore();
   const { orders, getAllOrders } = useOrderStore();
   useEffect(() => {
     getAllUsers();
@@ -38,6 +38,11 @@ const DashCustomersTable = () => {
 
   const handleDeleteUser = async (id) => {
     const { success, message } = await deleteUser(id);
+    HandeResults(success, message);
+  };
+
+  const handleBlockUser = async (id) => {
+    const { success, message } = await toggleBlockUser(id);
     HandeResults(success, message);
   };
 
@@ -58,6 +63,7 @@ const DashCustomersTable = () => {
             <TableHead className="w-[260px]">Location</TableHead>
             <TableHead className="text-center w-[180px]">Orders</TableHead>
             <TableHead>Role</TableHead>
+            <TableHead>Block Status</TableHead>
             <TableHead className="text-right w-[100px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -92,23 +98,39 @@ const DashCustomersTable = () => {
                     </div>
                   </TableCell>
 
+                  {/* address */}
                   <TableCell className="text-sm whitespace-normal">
                     <div>{u.address || "Not Provided"}</div>
                   </TableCell>
+
                   {/* orders */}
                   <TableCell className="text-center font-medium">
                     {orders.filter((o) => o.user._id === u._id).length ||
                       "none"}
                   </TableCell>
 
+                  {/* user role */}
                   <TableCell>
                     {u.role === "admin" ? (
-                      <Badge variant="destructive" className="px-2 py-1">
+                      <Badge className="px-2 py-1 bg-cyan-50 text-cyan-700">
                         {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
                       </Badge>
                     ) : (
                       <Badge className="px-2 py-1" variant={"secondary"}>
                         {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                      </Badge>
+                    )}
+                  </TableCell>
+
+                  {/* block status */}
+                  <TableCell>
+                    {u.blocked ? (
+                      <Badge variant="destructive" className="px-2 py-1">
+                        Blocked
+                      </Badge>
+                    ) : (
+                      <Badge className="px-2 py-1 bg-green-50 text-green-700">
+                        Active
                       </Badge>
                     )}
                   </TableCell>
@@ -122,7 +144,17 @@ const DashCustomersTable = () => {
                         className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700"
                         asChild
                       >
-                        <TbLockCancel className="h-9 w-9" />
+                        {u.blocked ? (
+                          <MdOutlineLockOpen
+                            className="h-9 w-9"
+                            onClick={() => handleBlockUser(u._id)}
+                          />
+                        ) : (
+                          <TbLockCancel
+                            className="h-9 w-9"
+                            onClick={() => handleBlockUser(u._id)}
+                          />
+                        )}
                       </Button>
                       <DashAlertDelete id={u._id} onDelete={handleDeleteUser} />
                     </div>

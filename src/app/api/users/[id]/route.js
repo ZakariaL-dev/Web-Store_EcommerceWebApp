@@ -37,6 +37,9 @@ export async function PATCH(request, { params }) {
     await connectDB();
     const { id } = await params;
 
+    const { searchParams } = new URL(request.url);
+    const isBlockToggle = searchParams.has("BlockStatus");
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
         { success: false, message: "Invalid user ID" },
@@ -44,10 +47,30 @@ export async function PATCH(request, { params }) {
       );
     }
 
+    const user = await User.findById(id).select("+password");
+
+    if (isBlockToggle) {
+      if (!user) {
+        return NextResponse.json(
+          { success: false, message: "User not found" },
+          { status: 404 },
+        );
+      }
+
+      user.blocked = !user.blocked;
+      await user.save();
+      return NextResponse.json(
+        {
+          success: true,
+          message: `User ${user.blocked ? "blocked" : "unblocked"} successfully`,
+          UserData: user,
+        },
+        { status: 200 },
+      );
+    }
+
     const body = await request.json();
     const { oldPassword, newPassword, ...updateData } = body;
-
-    const user = await User.findById(id).select("+password");
 
     if (!user) {
       return NextResponse.json(
