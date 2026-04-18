@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import DashNavBar from "@/components/DashBoard Components/Navigation/DashNavBar";
 import DashSideBar from "@/components/DashBoard Components/Navigation/DashSideBar";
 import UserSync from "@/components/StoreComponents/UserSync";
+import { AdminDarkProviders } from "@/components/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 // Shadcn Comp
@@ -29,16 +30,18 @@ export default async function DashLayout({ children }) {
   return (
     <html>
       <body>
-        <SidebarProvider>
-          <UserSync id={session?.user?.id} />
+        <AdminDarkProviders>
+          <SidebarProvider>
+            <UserSync id={session?.user?.id} />
 
-          <DashNavBar user={session?.user} />
-          <DashSideBar />
-          <main className="flex w-full mt-[61px] p-3">
-            {children}
-            <Toaster position="top-right" />
-          </main>
-        </SidebarProvider>
+            <DashNavBar user={session?.user} />
+            <DashSideBar />
+            <main className="flex w-full mt-[61px] p-3">
+              {children}
+              <Toaster position="top-right" />
+            </main>
+          </SidebarProvider>
+        </AdminDarkProviders>
       </body>
     </html>
   );

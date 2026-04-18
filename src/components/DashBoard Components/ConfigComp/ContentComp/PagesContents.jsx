@@ -16,7 +16,10 @@ const PagesContents = ({ c }) => {
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         {c.map((cp) => {
           return (
-            <div key={cp._id} className="bg-white p-3 rounded-lg border-2">
+            <div
+              key={cp._id}
+              className="bg-white dark:bg-gray-600 p-3 rounded-lg border-2"
+            >
               <h1 className="flex items-center justify-between mb-2 font-semibold">
                 <span>{cp.title}</span>
                 <CiEdit
@@ -24,7 +27,7 @@ const PagesContents = ({ c }) => {
                   onClick={() => setOpen(cp)}
                 />
               </h1>
-              <p className="text-sm text-gray-600 font-medium">
+              <p className="text-sm text-gray-600 dark:text-slate-400 font-medium">
                 Last Update: {cp.updated}
               </p>
             </div>

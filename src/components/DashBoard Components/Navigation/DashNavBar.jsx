@@ -29,6 +29,9 @@ import DashAccountDialogue from "../AccountComp/DashAccountDialogue";
 
 // Store
 import { useUserStore } from "@/utils/UserStore";
+import { BsMoonStars } from "react-icons/bs";
+import { useTheme } from "next-themes";
+import { FiSun } from "react-icons/fi";
 
 const DashNavBar = ({ user }) => {
   const [AccountToggle, setAccountToggle] = useState(false);
@@ -36,8 +39,10 @@ const DashNavBar = ({ user }) => {
 
   const { currentUser } = useUserStore();
 
+  const { theme, setTheme } = useTheme();
+
   return (
-    <nav className="flex items-center justify-between px-5 py-3 border-b-2 fixed top-0 left-0 right-0 bg-white z-50">
+    <nav className="flex items-center justify-between px-5 py-3 border-b-2 fixed top-0 left-0 right-0 bg-white z-50 dark:bg-gray-700">
       {/* left */}
       <div className="flex items-center gap-2 ">
         <SidebarTrigger className="lg:hidden" />
@@ -59,9 +64,23 @@ const DashNavBar = ({ user }) => {
       </div>
       {/* Right */}
       <div className="flex items-center gap-3">
-        {/* <Button variant="ghost" className="p-2" asChild>
-          <BsMoonStars className="w-9 h-9" />
-        </Button> */}
+        <Button
+          variant="ghost"
+          className="p-2"
+          asChild
+        >
+          {theme === "dark" ? (
+            <FiSun
+              className="w-9 h-9"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            />
+          ) : (
+            <BsMoonStars
+              className="w-9 h-9"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            />
+          )}
+        </Button>
         <Button variant="ghost" className="p-2" asChild>
           <LiaStoreAltSolid
             className="w-10 h-10"

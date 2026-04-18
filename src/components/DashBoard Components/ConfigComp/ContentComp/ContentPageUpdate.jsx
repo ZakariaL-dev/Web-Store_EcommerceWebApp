@@ -88,7 +88,7 @@ const ContentPageUpdate = ({ OpenStatus, OpenToggle, page }) => {
         </div>
         <footer className="text-right">
           <Button
-            className="bg-green-600 hover:bg-green-800 px-8"
+            className="bg-green-600 hover:bg-green-800 px-8 text-slate-50"
             onClick={handleUpdate}
             disabled={loading}
           >

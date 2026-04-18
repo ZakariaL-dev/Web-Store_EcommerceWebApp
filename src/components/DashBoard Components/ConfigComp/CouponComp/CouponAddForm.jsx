@@ -72,7 +72,7 @@ const CouponAddForm = ({ editingCoupon, setEditingCoupon }) => {
     setNewCoupon({ ...NewCoupon, code: result });
   };
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-2 bg-white p-3 rounded-lg mx-3">
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-2 bg-white dark:bg-gray-600 p-3 rounded-lg mx-3">
       <div>
         <Label htmlFor="code" className="mb-2">
           Coupon Code
@@ -87,14 +87,14 @@ const CouponAddForm = ({ editingCoupon, setEditingCoupon }) => {
             }
           />
           <Button
-            className="bg-gray-400 hover:bg-gray-600 text-sm absolute right-0 md:inline hidden"
+            className="bg-gray-400 hover:bg-gray-600 dark:hover:bg-gray-500 text-slate-50 text-sm absolute right-0 md:inline hidden"
             onClick={GenerateRandomCode}
           >
             Generate Code
           </Button>
         </div>
         <Button
-          className="bg-gray-400 hover:bg-gray-600 text-sm block md:hidden mt-2 w-full"
+          className="bg-gray-400 hover:bg-gray-600 dark:hover:bg-gray-500 text-slate-50 text-sm block md:hidden mt-2 w-full"
           onClick={GenerateRandomCode}
         >
           Generate Code
@@ -151,7 +151,7 @@ const CouponAddForm = ({ editingCoupon, setEditingCoupon }) => {
 
       <footer className="space-x-3">
         <Button
-          className="mt-5 bg-green-600 hover:bg-green-700"
+          className="mt-5 bg-green-600 hover:bg-green-700 text-slate-50"
           onClick={handleSubmitCoupon}
           disabled={Loading}
         >
@@ -165,7 +165,7 @@ const CouponAddForm = ({ editingCoupon, setEditingCoupon }) => {
         </Button>
         {editingCoupon && (
           <Button
-            className={"bg-red-700 hover:bg-red-500"}
+            className={"bg-red-700 hover:bg-red-500 text-slate-50"}
             onClick={() => setEditingCoupon(null)}
           >
             Cancel

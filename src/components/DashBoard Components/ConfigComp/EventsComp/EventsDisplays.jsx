@@ -36,11 +36,11 @@ const EventsDisplays = ({ events, setEditingEvent }) => {
         return (
           <div
             key={i}
-            className="flex justify-between items-start bg-white rounded-lg p-3 border-2 border-gray-300 mb-2.5"
+            className="flex justify-between items-start bg-white dark:bg-gray-800 rounded-lg p-3 border-2 border-gray-300 mb-2.5"
           >
             <div>
               <h1 className="text-lg font-bold">{e.title}</h1>
-              <h5 className="text-sm text-gray-700 font-semibold">
+              <h5 className="text-sm text-gray-700 dark:text-gray-600 font-semibold">
                 From {DisplayTime(e.start)} to {DisplayTime(e.end)}
               </h5>
               <p className="text-sm font-medium text-gray-500">
@@ -49,7 +49,7 @@ const EventsDisplays = ({ events, setEditingEvent }) => {
             </div>
             <div className="flex items-center gap-1.5">
               <CiEdit
-                className="text-[20px] cursor-pointer text-gray-500 hover:text-blue-800"
+                className="text-[20px] cursor-pointer text-gray-500 hover:text-blue-800 dark:hover:text-blue-500"
                 onClick={() => {
                   setEditingEvent(e);
                   window.scrollTo({ top: 0, behavior: "smooth" });

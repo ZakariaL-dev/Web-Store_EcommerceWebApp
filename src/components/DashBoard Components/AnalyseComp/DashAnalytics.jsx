@@ -94,7 +94,7 @@ const DashAnalytics = () => {
           return (
             <div
               key={i}
-              className="border-2 p-4 rounded-2xl bg-slate-50 flex items-center justify-between transition-all ease-in-out duration-500 hover:shadow-xl hover:bg-slate-100 hover:-translate-y-1.5 hover:scale-105"
+              className="border-2 p-4 rounded-2xl bg-slate-50 dark:bg-gray-800 flex items-center justify-between transition-all ease-in-out duration-500 hover:shadow-xl hover:bg-slate-100 hover:-translate-y-1.5 hover:scale-105 dark:hover:shadow-slate-600/60"
             >
               <div>
                 <p>{as.name}</p>
@@ -111,7 +111,7 @@ const DashAnalytics = () => {
           return (
             <div
               key={i}
-              className="border-2 py-2 px-4 rounded-2xl bg-slate-50 flex items-center gap-4 transition-all ease-in-out duration-500 hover:shadow-lg hover:bg-slate-100 hover:-translate-y-1"
+              className="border-2 py-2 px-4 rounded-2xl bg-slate-50 dark:bg-gray-800 flex items-center gap-4 transition-all ease-in-out duration-500 hover:shadow-lg hover:bg-slate-100 dark:hover:shadow-slate-600/60 hover:-translate-y-1"
             >
               {as.icon}
               <div>

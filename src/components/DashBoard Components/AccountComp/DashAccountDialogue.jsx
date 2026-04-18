@@ -14,7 +14,7 @@ import { signOut } from "next-auth/react";
 
 const DashAccountDialogue = ({ OpenToggle, user }) => {
   return (
-    <div className="absolute top-16 right-6 z-10 bg-slate-50 shadow-xl rounded-xl">
+    <div className="absolute top-16 right-6 z-10 bg-slate-50 shadow-xl rounded-xl dark:bg-gray-700">
       <div className="p-4">
         <h1 className="mb-1 font-bold text-xl">Welcome {user.name}</h1>
         <p>Manage Products, Orders & Wishlist</p>
@@ -24,7 +24,7 @@ const DashAccountDialogue = ({ OpenToggle, user }) => {
         <li>
           <Link
             href={"/admin/dashboard/settings"}
-            className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 last:rounded-b-xl last:pb-3"
+            className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 last:pb-3 dark:hover:bg-gray-600"
             onClick={() => OpenToggle(false)}
           >
             <BsPerson className="text-xl" />
@@ -32,7 +32,7 @@ const DashAccountDialogue = ({ OpenToggle, user }) => {
           </Link>
         </li>
         <li
-          className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 last:rounded-b-xl last:pb-3 cursor-pointer"
+          className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 rounded-b-xl last:pb-3 cursor-pointer dark:hover:bg-gray-600"
           onClick={() => {
             OpenToggle(false);
             signOut({ callbackUrl: "/" });

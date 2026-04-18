@@ -128,12 +128,12 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
     <div className="py-6 px-3 w-full space-y-6">
       <header className="text-4xl font-bold">Order Details</header>
       {/* order details */}
-      <main className="w-full bg-slate-100 rounded-2xl p-3 shadow-md">
+      <main className="w-full bg-slate-100 rounded-2xl p-3 shadow-md dark:bg-gray-800">
         <div className="flex items-center justify-between ">
           {/* order is and date */}
           <div>
             <h1 className="font-bold text-xl">Order #{order._id.slice(-6)}</h1>
-            <p className="font-semibold text-gray-500 flex items-center gap-2 text-[15px]">
+            <p className="font-semibold text-gray-500 dark:text-slate-400 flex items-center gap-2 text-[15px]">
               <IoCalendarOutline />
               {order.timeOfOrder}
             </p>
@@ -149,29 +149,35 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
         <div className="grid md:grid-cols-2 grid-cols-1 p-3 gap-4">
           {/* delivery info */}
           <div className="space-y-2.5">
-            <h1 className="mb-2 font-semibold flex gap-2 items-center">
+            <h1 className="mb-2 font-semibold flex gap-2 items-center dark:text-gray-400">
               <FaUserLarge />
               Customer Informations
             </h1>
 
             <div>
-              <h3 className="text-[15px] font-medium">Phone Number</h3>
+              <h3 className="text-[15px] font-medium dark:text-slate-300">
+                Phone Number
+              </h3>
               <p className="text-sm">{order.user.phoneNumber}</p>
             </div>
 
             <div>
-              <h3 className="text-[15px] font-medium">Email Address</h3>
+              <h3 className="text-[15px] font-medium dark:text-slate-300">
+                Email Address
+              </h3>
               <p className="text-sm">{order.user.email}</p>
             </div>
           </div>
           {/* delivery info */}
           <div className="space-y-2.5">
-            <h1 className="mb-2 font-semibold flex gap-2 items-center">
+            <h1 className="mb-2 font-semibold flex gap-2 items-center dark:text-gray-400">
               <AiOutlineTruck className="text-2xl" />
               Delivery Informations
             </h1>
             <div>
-              <h3 className="text-[15px] font-medium">Delivery Address</h3>
+              <h3 className="text-[15px] font-medium dark:text-slate-300">
+                Delivery Address
+              </h3>
               <p className="text-sm">
                 {order.deliveryAddress.address === ""
                   ? order.deliveryAddress.bureauAddress
@@ -180,7 +186,9 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
             </div>
 
             <div>
-              <h3 className="text-[15px] font-medium">Method</h3>
+              <h3 className="text-[15px] font-medium dark:text-slate-300">
+                Method
+              </h3>
               <p className="text-sm">{order.deliveryPlace}</p>
             </div>
             <div>{HandleDeliverStatus(order.status)}</div>
@@ -190,7 +198,11 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
         <h1 className="font-bold text-xl mb-2">Order Items</h1>
         <Table>
           <TableHeader>
-            <TableRow className={"bg-slate-200 hover:bg-slate-300"}>
+            <TableRow
+              className={
+                "bg-slate-200 hover:bg-slate-300 dark:bg-gray-600 dark:hover:bg-gray-500"
+              }
+            >
               <TableHead className="w-[120px]">Product&apos;s Image</TableHead>
               <TableHead className="w-[300px]">Details</TableHead>
               <TableHead>Quantity</TableHead>
@@ -203,7 +215,9 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
               return (
                 <TableRow
                   key={p._id}
-                  className={"border-b-2 p-3 border-slate-300"}
+                  className={
+                    "border-b-2 px-3 border-slate-200 dark:border-gray-600 py-6"
+                  }
                 >
                   <TableCell>
                     <Image
@@ -216,15 +230,21 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
                   </TableCell>
                   <TableCell className="align-top pt-6">
                     <div>
-                      <h1 className="mb-1 text-lg font-semibold">{p.product.title}</h1>
+                      <h1 className="mb-1 text-lg font-semibold">
+                        {p.product.title}
+                      </h1>
                       <div className="space-x-2 font-semibold">
                         <p className="text-slate-500">Color: {p.color}</p>
                         <p className="text-slate-500">Size: {p.size}</p>
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className={"text-lg font-semibold text-gray-500"} >{p.quantity}</TableCell>
-                  <TableCell className={"text-lg font-semibold text-gray-500"} >{p.priceAtPurchase} Dz</TableCell>
+                  <TableCell className={"text-lg font-semibold text-gray-500"}>
+                    {p.quantity}
+                  </TableCell>
+                  <TableCell className={"text-lg font-semibold text-gray-500"}>
+                    {p.priceAtPurchase} Dz
+                  </TableCell>
                   <TableCell className="font-bold text-lg text-right pr-6">
                     {p.priceAtPurchase * p.quantity} Dz
                   </TableCell>
@@ -236,9 +256,7 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
 
         <Separator className={"my-3 bg-gray-500"} />
         <footer className="grid md:grid-cols-3 grid-cols-1 p-3">
-          <div></div>
-          <div></div>
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 md:col-start-3">
             <div className="flex items-center justify-between">
               <h3 className="text-[15px] font-medium text-gray-500">Method</h3>
               <p className="text-lg font-bold">{order.paymentMethod}</p>
@@ -261,7 +279,7 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
               <p
                 className={`font-bold text-lg ${order.paymentStatus ? "text-green-400" : " text-red-700"}`}
               >
-                + {order.deliveryFee}.00   Dz
+                + {order.deliveryFee}.00 Dz
               </p>
             </div>
             <Separator className={"my-2 bg-gray-300"} />
@@ -287,7 +305,7 @@ const DashOrderDetailsPage = ({ order, OpenToggle }) => {
         </Button>
 
         <Button
-          className={"bg-cyan-600 hover:bg-cyan-400"}
+          className={"bg-cyan-600 hover:bg-cyan-400 text-slate-50"}
           onClick={() => OpenToggle(true)}
         >
           Update Order Status

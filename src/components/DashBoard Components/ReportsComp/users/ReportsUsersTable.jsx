@@ -118,10 +118,12 @@ const ReportsUsersTable = () => {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage
-                          src={u.reportedBy.profileImage}
-                          alt={u.reportedBy.userName}
+                          src={u.reportedBy?.profileImage}
+                          alt={u.reportedBy?.userName}
                         />
-                        <AvatarFallback>{u.reportedBy.userName}</AvatarFallback>
+                        <AvatarFallback>
+                          {u.reportedBy?.userName?.charAt(0) ?? "?"}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="text-sm font-semibold leading-none">
@@ -138,19 +140,19 @@ const ReportsUsersTable = () => {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage
-                          src={u.reportedUser.profileImage}
-                          alt={u.reportedUser.userName}
+                          src={u.reportedUser?.profileImage}
+                          alt={u.reportedUser?.userName}
                         />
                         <AvatarFallback>
-                          {u.reportedUser.userName}
+                          {u.reportedUser?.userName?.charAt(0) ?? "?"}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="text-sm font-semibold leading-none">
-                          {u.reportedUser.userName}
+                          {u.reportedUser?.userName}
                         </span>
                         <span className="text-xs text-muted-foreground mt-1">
-                          {u.reportedUser.email}
+                          {u.reportedUser?.email}
                         </span>
                       </div>
                     </div>

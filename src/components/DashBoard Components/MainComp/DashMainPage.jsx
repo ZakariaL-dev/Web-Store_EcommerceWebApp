@@ -81,7 +81,7 @@ const DashMainPage = () => {
           </div>
           <div className="grid md:grid-cols-4 grid-cols-2 gap-5 mt-2.5 w-full">
             {Totaldetails.map((c, i) => (
-              <DashStatsCard className="" key={c.id || i} detail={c} />
+              <DashStatsCard key={c.id || i} detail={c} />
             ))}
           </div>
         </div>

@@ -148,7 +148,7 @@ const DashAccountForm = () => {
   };
 
   return (
-    <form className="max-width mx-auto bg-slate-100 rounded-2xl px-3 py-5 shadow-md">
+    <form className="max-width mx-auto bg-slate-100 dark:bg-gray-700 rounded-2xl px-3 py-5 shadow-md">
       <h1 className="mb-4 text-2xl font-bold">Profile Informations</h1>
       <input
         type="file"
@@ -356,7 +356,7 @@ const DashAccountForm = () => {
       <div className="w-full flex justify-end items-center">
         <Button
           type="submit"
-          className="bg-gray-600"
+          className="bg-gray-600 text-white"
           onClick={(e) => handleSubmitUser(e)}
           disabled={Loading}
         >

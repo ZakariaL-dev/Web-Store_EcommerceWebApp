@@ -21,7 +21,7 @@ const Events = () => {
       </div>
     );
   return (
-    <div className="w-full border-2 rounded-lg p-3 bg-slate-50">
+    <div className="w-full border-2 rounded-lg p-3 bg-slate-50 dark:bg-gray-700 ">
       <header className="text-lg mb-3 font-semibold">Store Events</header>
       <EventsAddForm
         key={editingEvent?._id || "new-event"}

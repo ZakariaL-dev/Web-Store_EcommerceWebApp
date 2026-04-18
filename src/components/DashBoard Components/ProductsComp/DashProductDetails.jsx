@@ -27,43 +27,49 @@ const DashProductDetails = ({ slug }) => {
     <div className="py-6 px-3 w-full space-y-6">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Product Details</h1>
-        <Button onClick={() => router.push(`/admin/dashboard/product/editing/${slug}`)}>
+        <Button
+          onClick={() =>
+            router.push(`/admin/dashboard/product/editing/${slug}`)
+          }
+        >
           Edit Product
         </Button>
-        </header>
+      </header>
       <main className="grid grid-cols-[2fr_4fr] gap-x-8 gap-y-4 grid-rows-2">
         {/* pics */}
-        <div className="bg-slate-50 space-y-3 p-3 rounded-xl shadow-md">
-          <h3 className="font-medium">Media</h3>
+        <div className="bg-slate-50 dark:bg-gray-800 space-y-3 p-3 rounded-xl shadow-md">
+          <h3 className="font-medium dark:text-gray-400">Media</h3>
           <DashProductImgsDisplay imgs={currentProduct.previewImages} />
         </div>
         {/* General infos */}
-        <div className="bg-slate-50 space-y-3 p-3 rounded-xl shadow-md">
-          <h3 className="font-medium">General Informations</h3>
+        <div className="bg-slate-50 dark:bg-gray-800 space-y-3 p-3 rounded-xl shadow-md">
+          <h3 className="font-medium dark:text-gray-400">
+            General Informations
+          </h3>
           <main className="space-y-4">
             {/* title */}
             <div>
-              <h6 className="font-light underline">Product Name:</h6>
+              <h6 className="font-light underline dark:text-slate-300">Product Name:</h6>
               <p>{currentProduct.title}</p>
             </div>
             {/* descr */}
             <div>
-              <h6 className="font-light underline">Product Description:</h6>
+              <h6 className="font-light underline dark:text-slate-300">Product Description:</h6>
               <p>{currentProduct.description}</p>
             </div>
             {/* categ */}
             <div>
-              <h6 className="font-light underline">Product Category:</h6>
+              <h6 className="font-light underline dark:text-slate-300">Product Category:</h6>
               <p className="capitalize">{currentProduct.category}</p>
             </div>
             {/* status */}
             <div>
-              <h6 className="font-light underline">Product Status:</h6>
+              <h6 className="font-light underline dark:text-slate-300">Product Status:</h6>
               <p className="capitalize">{currentProduct.status}</p>
             </div>
             {/* price */}
             <div>
-              <h6 className="font-light underline">Product Pricing:</h6>
+              <h6 className="font-light underline dark:text-slate-300">Product Pricing:</h6>
               <p className="font-medium text-gray-500">
                 Base Price:{" "}
                 <span>
@@ -97,14 +103,16 @@ const DashProductDetails = ({ slug }) => {
           </main>
         </div>
         {/* variants */}
-        <div className="bg-slate-50 space-y-3 p-3 rounded-xl shadow-md">
-          <h3 className="font-medium">Variants & Inventory</h3>
+        <div className="bg-slate-50 dark:bg-gray-800 space-y-3 p-3 rounded-xl shadow-md">
+          <h3 className="font-medium dark:text-gray-400">
+            Variants & Inventory
+          </h3>
           <main className="space-y-2">
             {currentProduct.variants.map((v) => {
               return (
                 <div
                   key={v._id}
-                  className="bg-slate-100 border border-gray-400 rounded-md flex items-start justify-between p-3  text-sm"
+                  className="bg-slate-100 dark:bg-gray-600 border border-gray-400 rounded-md flex items-start justify-between p-3  text-sm"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="bg-white font-bold rounded-full flex items-center justify-center w-10 h-10 border border-gray-400 text-base text-gray-600">

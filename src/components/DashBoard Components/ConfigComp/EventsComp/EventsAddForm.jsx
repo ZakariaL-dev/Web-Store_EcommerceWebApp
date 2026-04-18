@@ -71,7 +71,7 @@ const EventsAddForm = ({ editingEvent, setEditingEvent }) => {
   };
 
   return (
-    <div className="my-2 bg-white p-3 rounded-lg mx-2">
+    <div className="my-2 bg-white dark:bg-gray-500  p-3 rounded-lg mx-2">
       <div>
         <Label htmlFor="title" className="mb-2">
           Event Title
@@ -172,7 +172,7 @@ const EventsAddForm = ({ editingEvent, setEditingEvent }) => {
       {/*  */}
       <footer className="w-full text-right space-x-3 mt-5">
         <Button
-          className=" bg-green-600 hover:bg-green-700"
+          className=" bg-green-600 hover:bg-green-700 text-slate-50"
           onClick={handleSubmitEvent}
           disabled={loading}
         >
@@ -180,7 +180,7 @@ const EventsAddForm = ({ editingEvent, setEditingEvent }) => {
         </Button>
         {editingEvent && (
           <Button
-            className={"bg-red-700 hover:bg-red-500"}
+            className={"bg-red-700 hover:bg-red-500 text-slate-50"}
             onClick={() => setEditingEvent(null)}
           >
             Cancel

@@ -73,7 +73,7 @@ const FilterConfigForm = ({ f }) => {
 
   return (
     <>
-      <div className="my-2 bg-white p-3 rounded-lg mx-1.5 border-2">
+      <div className="my-2 bg-white dark:bg-gray-500 p-3 rounded-lg mx-1.5 border-2">
         <h1 className="font-bold">Price Range</h1>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-3">
           <div>
@@ -113,7 +113,7 @@ const FilterConfigForm = ({ f }) => {
         </div>
       </div>
       {/*  */}
-      <div className="my-2 bg-white p-3 rounded-lg mx-1.5 border-2">
+      <div className="my-2 bg-white dark:bg-gray-500 p-3 rounded-lg mx-1.5 border-2">
         <h1 className="font-bold">Available Colors</h1>
         <div className="flex flex-wrap gap-2 my-2">
           {Filters.colors.map((color) => (
@@ -151,7 +151,7 @@ const FilterConfigForm = ({ f }) => {
         </div>
       </div>
       {/*  */}
-      <div className="my-2 bg-white p-3 rounded-lg mx-1.5 border-2">
+      <div className="my-2 bg-white dark:bg-gray-500 p-3 rounded-lg mx-1.5 border-2">
         <h1 className="font-bold">Available Sizes</h1>
         <div className="flex flex-wrap gap-2 my-2">
           {Filters.sizes.map((size) => (
@@ -190,7 +190,7 @@ const FilterConfigForm = ({ f }) => {
       </div>
       <div className="mt-6 flex justify-end px-1.5">
         <Button
-          className="bg-green-600 hover:bg-green-800 px-8"
+          className="bg-green-600 hover:bg-green-800 px-8 text-slate-50"
           onClick={handleSave}
           disabled={loading}
         >

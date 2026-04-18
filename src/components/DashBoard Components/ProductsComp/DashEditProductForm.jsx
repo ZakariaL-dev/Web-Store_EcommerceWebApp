@@ -155,7 +155,7 @@ const DashEditProductForm = ({ current }) => {
   };
 
   return (
-    <form className="max-w-3xl mx-auto bg-gray-50 p-3 rounded-2xl border-2">
+    <form className="max-w-3xl mx-auto bg-gray-50 dark:bg-gray-800 p-3 rounded-2xl border-2">
       <header className="w-full text-2xl font-bold">Edit Your Product</header>
       <Separator className="my-2" />
       {/* title */}
@@ -264,7 +264,7 @@ const DashEditProductForm = ({ current }) => {
         </div>
         {/* dicount amount */}
         {NewProduct.status === "on sale" ? (
-          <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg flex items-center justify-between md:w-full lg:flex-2">
+          <div className="p-4 bg-orange-50 dark:bg-orange-300 border border-orange-200 dark:border-orange-700 rounded-lg flex items-center justify-between md:w-full lg:flex-2">
             <div className="flex-1 mr-4">
               <Label htmlFor="discount" className={"w-full mb-2"}>
                 Discount Percentage (%)
@@ -277,7 +277,9 @@ const DashEditProductForm = ({ current }) => {
               />
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-500">Sale Price</p>
+              <p className="text-sm text-gray-500 dark:text-slate-200">
+                Sale Price
+              </p>
               <p className="text-xl font-bold text-orange-600">
                 {finalPrice} Dz
               </p>
@@ -304,7 +306,7 @@ const DashEditProductForm = ({ current }) => {
       {NewProduct.variants.map((variant, index) => (
         <div
           key={index}
-          className="flex gap-2 items-end bg-gray-50 p-2 rounded-md"
+          className="flex gap-2 items-end bg-gray-50 dark:bg-gray-800 p-2 rounded-md"
         >
           <div className="flex-1">
             <Input

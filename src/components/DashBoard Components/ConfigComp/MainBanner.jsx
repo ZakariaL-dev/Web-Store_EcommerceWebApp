@@ -105,7 +105,7 @@ const MainBanner = () => {
   }
 
   return (
-    <div className="w-full border-2 rounded-lg p-3 bg-slate-50">
+    <div className="w-full border-2 rounded-lg p-3 bg-slate-50 dark:bg-gray-700 ">
       <header className="w-full flex items-center justify-between mt-2.5">
         <h1 className="text-lg mb-3 font-bold px-3">Main Page Banners</h1>
         <Button
@@ -157,7 +157,7 @@ const MainBanner = () => {
       </div>
       <div className="mt-6 flex justify-end px-1.5">
         <Button
-          className="bg-green-600 hover:bg-green-800 px-8"
+          className="bg-green-600 hover:bg-green-800 px-8 text-slate-50"
           onClick={handleSave}
           disabled={loading}
         >

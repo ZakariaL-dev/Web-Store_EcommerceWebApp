@@ -10,7 +10,7 @@ import CouponsDisplay from "./CouponComp/CouponsDisplay";
 const CouponSystem = () => {
   const [editingCoupon, setEditingCoupon] = useState(null);
   return (
-    <div className="w-full border-2 rounded-lg p-3 bg-slate-50">
+    <div className="w-full border-2 rounded-lg p-3 bg-slate-50 dark:bg-gray-700 ">
       <header className="text-lg mb-3 font-semibold">
         {editingCoupon ? "Edit Coupon" : "Coupon Management"}
       </header>

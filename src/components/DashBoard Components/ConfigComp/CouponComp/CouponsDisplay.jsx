@@ -53,15 +53,15 @@ const CouponsDisplay = ({ setEditingCoupon }) => {
         return (
           <div
             key={c._id}
-            className="flex items-center justify-between bg-white rounded-lg p-3 border-2 border-gray-300 mb-2.5"
+            className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 border-2 border-gray-300 mb-2.5"
           >
             <div className="flex gap-3 items-center">
               <div
                 className={`w-3 h-3 rounded-full ${c.expired ? "bg-red-700" : "bg-emerald-600"}`}
               ></div>
               <div className="text-gray-600">
-                <h1 className="font-semibold">{c.code}</h1>
-                <p className="text-sm">
+                <h1 className="font-semibold dark:text-slate-300">{c.code}</h1>
+                <p className="text-sm dark:text-slate-500">
                   {c.discount} • {c.expired ? "Expired: " : "Expires: "}
                   {DisplayTime(c.expireDate)}
                 </p>
@@ -70,7 +70,7 @@ const CouponsDisplay = ({ setEditingCoupon }) => {
             {/*  */}
             <div className="flex items-center gap-1.5">
               <CiEdit
-                className="text-[20px] cursor-pointer text-gray-500 hover:text-blue-800"
+                className="text-[20px] cursor-pointer text-gray-500 hover:text-blue-800 dark:hover:text-blue-500"
                 onClick={() => {
                   setEditingCoupon(c);
                   window.scrollTo({ top: 0, behavior: "smooth" });

@@ -91,7 +91,7 @@ const DashOrderDialogue = ({
                 paymentStatus: PaymentStatus,
               })
             }
-            className={"bg-amber-600 hover:bg-amber-400 w-[57%]"}
+            className={"bg-amber-600 hover:bg-amber-400 w-[57%] text-slate-50"}
           >
             {loading ? (
               <div className="flex items-center gap-2">

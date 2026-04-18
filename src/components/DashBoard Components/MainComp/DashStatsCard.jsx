@@ -1,6 +1,6 @@
 const DashStatsCard = ({detail}) => {
   return (
-    <div className="flex items-center gap-5 p-4 rounded-md w-full shadow-lg ">
+    <div className="flex items-center gap-5 p-4 rounded-md w-full shadow-lg dark:shadow-slate-500">
       <detail.icon
         size={40}
         className="bg-gray-500 p-2 rounded-md text-slate-100"
