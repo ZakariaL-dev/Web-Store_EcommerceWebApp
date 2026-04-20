@@ -43,7 +43,7 @@ const StoreShoppingCart = ({ OpenStatus, OpenToggle }) => {
 
   return (
     <div
-      className={`bg-white h-screen lg:w-md w-full border-l-2 fixed top-0 right-0 z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
+      className={`bg-white dark:bg-slate-900 h-screen lg:w-md w-full border-l-2 fixed top-0 right-0 z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
         OpenStatus ? "translate-x-0" : "translate-x-full"
       }`}
     >

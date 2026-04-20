@@ -34,16 +34,20 @@ const AccountCompareTable = ({ products }) => {
   const StatusSwitch = (stts) => {
     switch (stts) {
       case "normal":
-        return <Badge variant={"outline"}>Normal</Badge>;
+        return (
+          <Badge variant={"outline"} className={"dark:bg-gray-700"}>
+            Normal
+          </Badge>
+        );
       case "on sale":
         return (
-          <Badge variant={"outline"} className="text-red-600 border">
+          <Badge variant={"outline"} className="text-red-600 border dark:bg-gray-700">
             On Sale
           </Badge>
         );
       case "new":
         return (
-          <Badge variant={"outline"} className="text-green-800">
+          <Badge variant={"outline"} className="text-green-600 dark:bg-gray-700">
             New
           </Badge>
         );
@@ -283,7 +287,7 @@ const AccountCompareTable = ({ products }) => {
                   ) : (
                     <Button
                       variant={"outline"}
-                      className="text-red-800 hover:text-red-600 hover:bg-red-100"
+                      className="text-red-800 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-300"
                       onClick={() => handleRemove(p._id)}
                     >
                       Remove From List

@@ -40,7 +40,7 @@ const StoreFinalCartCard = ({ item, onRemove }) => {
     .map((v) => v.size);
 
   return (
-    <div className="flex items-start justify-between p-3 border-b-2 border-slate-200 w-full">
+    <div className="flex items-start justify-between p-3 border-b-2 border-slate-200 dark:border-slate-600 w-full">
       <div className="flex items-start gap-4">
         <Image
           src={product.previewImages[0]}
@@ -59,7 +59,7 @@ const StoreFinalCartCard = ({ item, onRemove }) => {
                 {(
                   product.price -
                   (product.price * product.discount) / 100
-                ).toFixed(2)}
+                ).toFixed(2)}{" "}
                 Dz
               </h1>
             ) : (
@@ -115,7 +115,7 @@ const StoreFinalCartCard = ({ item, onRemove }) => {
             />
             <Button
               variant={"ghost"}
-              className="text-red-800 hover:text-red-600 hover:bg-red-100 sm:hidden block"
+              className="text-red-800 hover:text-red-600 hover:bg-red-100 sm:hidden block dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-300"
               onClick={onRemove}
             >
               Remove
@@ -138,7 +138,7 @@ const StoreFinalCartCard = ({ item, onRemove }) => {
         )}
         <Button
           variant={"ghost"}
-          className="text-red-800 hover:text-red-600 hover:bg-red-100"
+          className="text-red-800 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-300"
           onClick={onRemove}
         >
           Remove

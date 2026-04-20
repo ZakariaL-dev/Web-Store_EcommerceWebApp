@@ -45,7 +45,7 @@ const AccountWishCard = ({ product, onRemove }) => {
     setAddLoad(false);
   };
   return (
-    <div className="grid md:grid-cols-[4fr_1fr] grid-cols-1 p-3 border-b-2 border-slate-200">
+    <div className="grid md:grid-cols-[4fr_1fr] grid-cols-1 p-3 border-b-2 border-slate-200 dark:border-slate-700 last:border-b-0">
       <div className="flex items-start gap-4 w-full">
         <Image
           src={product.previewImages[0]}
@@ -112,13 +112,13 @@ const AccountWishCard = ({ product, onRemove }) => {
             </span>
           </div>
         ) : (
-          <p className="font-bold text-gray-500 text-right">
+          <p className="font-bold text-gray-500 dark:text-gray-400 text-right">
             {product.price} Dz
           </p>
         )}
         <Button
           variant={"ghost"}
-          className="text-red-800 hover:text-red-600 hover:bg-red-100 mt-2.5"
+          className="text-red-800 hover:text-red-600 hover:bg-red-100 mt-2.5 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-300"
           onClick={onRemove}
         >
           Remove

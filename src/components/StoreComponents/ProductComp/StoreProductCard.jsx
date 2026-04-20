@@ -91,7 +91,7 @@ const StoreProductCard = ({ product }) => {
     <Link
       href={`/products/${product.slug}`}
       className={`
-        shrink-0 border-2 border-gray-300 w-60 overflow-hidden rounded-2xl h-[400px] transition-all ease-in-out hover:shadow-xl group relative
+        shrink-0 border-2 border-gray-300 dark:border-gray-500 dark:hover:shadow-slate-200/60 w-60 overflow-hidden rounded-2xl h-[400px] transition-all ease-in-out hover:shadow-xl group relative
       `}
     >
       <div className="relative h-full">
@@ -111,12 +111,14 @@ const StoreProductCard = ({ product }) => {
           <></>
         )}
         {product.status === "on sale" ? (
-          <Badge className="absolute top-1 left-1 bg-red-700">On Sale</Badge>
+          <Badge className="absolute top-1 left-1 bg-red-700 text-slate-100">
+            On Sale
+          </Badge>
         ) : (
           <></>
         )}
       </div>
-      <div className="absolute w-full pt-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white md:h-20 bottom-0">
+      <div className="absolute w-full pt-3 transition-all ease-in-out group-hover:-translate-y-14 bg-white dark:bg-gray-800 md:h-20 bottom-0">
         <h1 className="text-[15px] mb-1 font-bold px-3">{product.title}</h1>
         {/*  */}
         {product.status === "on sale" ? (
@@ -133,11 +135,11 @@ const StoreProductCard = ({ product }) => {
             </p>
           </div>
         ) : (
-          <p className="mb-2 font-bold px-3 text-stone-600">
+          <p className="mb-2 font-bold px-3 text-stone-600 dark:text-stone-400">
             {product.price} Dz
           </p>
         )}
-        <div className="flex gap-3 items-center justify-between md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full bg-white h-full p-3 opacity-100">
+        <div className="flex gap-3 items-center justify-between md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full bg-white dark:bg-gray-800 h-full p-3 opacity-100">
           <Button
             variant="outline"
             onClick={(e) => {
@@ -170,15 +172,15 @@ const StoreProductCard = ({ product }) => {
                 onClick={(e) => handleToggleFavorite(e)}
                 asChild
               >
-                <FaRegHeart className="w-9 h-9" />
+                <FaRegHeart className="w-9 h-9 dark:hover:bg-gray-600/70" />
               </Button>
             )}
             <Button
               variant="ghost"
               className={`p-2 ${
                 isInCompare
-                  ? "text-blue-600 hover:text-blue-800 bg-blue-50"
-                  : ""
+                  ? "text-blue-600 hover:text-blue-400"
+                  : "dark:hover:bg-gray-600/70"
               }`}
               onClick={(e) => handleToggleCompare(e)}
               asChild

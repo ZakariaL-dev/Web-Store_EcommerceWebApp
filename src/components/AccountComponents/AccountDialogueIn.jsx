@@ -34,7 +34,7 @@ const AccountDialogueIn = ({ OpenToggle, user }) => {
     },
   ];
   return (
-    <div className="absolute top-16 right-6 z-10 bg-slate-50 shadow-xl rounded-xl">
+    <div className="absolute top-16 right-6 z-10 bg-slate-50 dark:bg-gray-700 shadow-xl rounded-xl">
       <div className="p-4">
         <h1 className="mb-1 font-bold text-xl">Welcome {user.name}</h1>
         <p>Manage Cart, Orders & Wishlist</p>
@@ -44,7 +44,7 @@ const AccountDialogueIn = ({ OpenToggle, user }) => {
         {user.role === "admin" && (
           <Link
             href={"/admin/dashboard"}
-            className="w-full flex items-center gap-1.5 px-4 py-2 transition-all ease-in-out hover:bg-slate-100 last:rounded-b-xl last:pb-3"
+            className="w-full flex items-center gap-1.5 px-4 py-2 transition-all ease-in-out hover:bg-slate-100 dark:hover:bg-gray-800 last:rounded-b-xl last:pb-3"
             onClick={() => OpenToggle(false)}
           >
             <GrUserAdmin className="text-xl" />
@@ -56,7 +56,7 @@ const AccountDialogueIn = ({ OpenToggle, user }) => {
             <Link
               key={i}
               href={dl.link}
-              className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 last:rounded-b-xl last:pb-3"
+              className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 dark:hover:bg-gray-800 last:rounded-b-xl last:pb-3"
               onClick={() => OpenToggle(false)}
             >
               <dl.icon className="text-xl" />
@@ -65,7 +65,7 @@ const AccountDialogueIn = ({ OpenToggle, user }) => {
           );
         })}
         <li
-          className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 last:rounded-b-xl last:pb-3 cursor-pointer"
+          className="w-full flex items-center gap-1.5 px-3 py-2 transition-all ease-in-out hover:bg-slate-100 dark:hover:bg-gray-800 last:rounded-b-xl last:pb-3 cursor-pointer"
           onClick={() => {
             OpenToggle(false);
             signOut({ callbackUrl: "/" });

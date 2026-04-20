@@ -111,7 +111,7 @@ const StoreSearchFilter = () => {
   return (
     <div
       className={`
-        fixed inset-y-0 left-0 z-50 w-full md:w-1/2 bg-white border-r-2 
+        fixed inset-y-0 left-0 z-50 w-full md:w-1/2 bg-white dark:bg-slate-950 border-r-2 
         transition-transform duration-300 ease-in-out
         shadow-[10px_0_15px_-3px_rgba(0,0,0,0.1)]
         ${OpenFilters ? "translate-x-0" : "-translate-x-full"}
@@ -245,7 +245,7 @@ const StoreSearchFilter = () => {
                   return (
                     <div
                       key={i}
-                      className="hover:bg-slate-50 mb-1 px-4 py-3 rounded-lg flex gap-3"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800 mb-1 px-4 py-3 rounded-lg flex gap-3"
                     >
                       <Checkbox
                         id={`color ${i}`}
@@ -273,7 +273,7 @@ const StoreSearchFilter = () => {
                 return (
                   <div
                     key={i}
-                    className="hover:bg-slate-50 mb-1 px-4 py-3 rounded-lg flex gap-3"
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800 mb-1 px-4 py-3 rounded-lg flex gap-3"
                   >
                     <Checkbox
                       id={`size ${i}`}

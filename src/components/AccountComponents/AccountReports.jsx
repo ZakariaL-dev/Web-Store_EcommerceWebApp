@@ -50,8 +50,8 @@ const AccountReports = () => {
         return {
           id: report._id,
           title: isProduct
-            ? report.product.title
-            : report.reportedUser.userName,
+            ? report?.product?.title
+            : report?.reportedUser?.userName,
           cause: report.reason,
           other: report.OtherReason,
           comment: report.comment,
@@ -207,7 +207,7 @@ const AccountReports = () => {
           return (
             <div
               key={r.id}
-              className="flex justify-between items-start py-3 px-4 transition-all ease-in-out duration-200 hover:bg-gray-100 border-b-2 border-gray-300 last:border-0 first:rounded-t-xl last:rounded-b-xl"
+              className="flex justify-between items-start py-3 px-4 transition-all ease-in-out duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700 last:border-0 first:rounded-t-xl last:rounded-b-xl"
             >
               <div className="w-full">
                 <div className="flex items-center justify-between mb-2 w-full">

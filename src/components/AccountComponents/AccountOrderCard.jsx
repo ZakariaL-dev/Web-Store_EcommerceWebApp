@@ -160,7 +160,7 @@ const AccountOrderCard = ({ order, cancel }) => {
           </Button>
           {order.status === "pending" && (
             <Button
-              className="bg-red-600 hover:bg-red-700 w-full"
+              className="bg-red-600 hover:bg-red-700 w-full text-slate-50"
               onClick={cancel}
             >
               Cancel Order

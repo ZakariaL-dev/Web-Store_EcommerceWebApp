@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 // Utils
 import { auth } from "@/lib/auth";
+import { UserDarkProviders } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,18 +38,20 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  
+
   return (
     <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserSync id={session?.user?.id} />
-        <StoreAdminRedirect />
-        <StoreNavBar user={session?.user} />
-        <main className="w-full mt-5">{children}</main>
-        <StoreFooter user={session?.user} />
-        <Toaster position="top-right" />
+        <UserDarkProviders>
+          <UserSync id={session?.user?.id} />
+          <StoreAdminRedirect />
+          <StoreNavBar user={session?.user} />
+          <main className="w-full mt-5">{children}</main>
+          <StoreFooter user={session?.user} />
+          <Toaster position="top-right" />
+        </UserDarkProviders>
       </body>
     </html>
   );

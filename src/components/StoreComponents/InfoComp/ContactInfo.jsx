@@ -32,7 +32,7 @@ const ContactInfo = () => {
     },
   ];
   return (
-    <div className="bg-slate-50 p-4 rounded-2xl shadow-lg">
+    <div className="bg-slate-50 dark:bg-gray-900 p-4 rounded-2xl shadow-lg">
       <header className="text-2xl font-bold mb-7 ">Contact Information</header>
       <main className="space-y-3">
         {infos.map((f, i) => {

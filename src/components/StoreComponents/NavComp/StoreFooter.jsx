@@ -51,18 +51,18 @@ const StoreFooter = () => {
               key={f.id}
               className="flex gap-3 items-center lg:w-1/5 w-1/2 lg:flex-row flex-col mt-3"
             >
-              <div className="rounded-full border-2 border-black">
+              <div className="rounded-full border-2 border-black dark:border-slate-50">
                 <f.icon className="w-14 h-14 p-2.5" />
               </div>
               <div className="lg:text-start text-center px-3">
                 <h1 className="font-semibold text-xl lg:mb-2">{f.title}</h1>
-                <p>{f.description}</p>
+                <p className="dark:text-slate-400 text-sm">{f.description}</p>
               </div>
             </div>
           );
         })}
       </header>
-      <main className="flex lg:flex-row flex-col items-start justify-around py-3 px-6 bg-slate-200">
+      <main className="flex lg:flex-row flex-col items-start justify-around py-3 px-6 bg-slate-200 dark:bg-gray-800">
         <div>
           <h1 className="text-2xl font-semibold mb-1">Information</h1>
           <ul className="footerUl">
@@ -126,7 +126,7 @@ const StoreFooter = () => {
           </div>
         </div>
       </main>
-      <footer className="border-2 border-t-slate-300 py-2 px-4 flex justify-center lg:justify-between items-center flex-wrap gap-3 bg-slate-200">
+      <footer className="border-2 border-t-slate-300 dark:border-t-slate-500 py-2 px-4 flex justify-center lg:justify-between items-center flex-wrap gap-3 bg-slate-200 dark:bg-gray-700">
         <Link href={"/"} className="flex items-center gap-3">
           <LiaOpencart className="text-4xl" />
           <h1 className="font-bold">Web Store</h1>
@@ -136,7 +136,7 @@ const StoreFooter = () => {
           <a
             href="https://github.com/ZakariaL-dev"
             target="_blank"
-            className="text-gray-600 hover:text-gray-800 font-extrabold"
+            className="text-gray-600 hover:text-gray-800 dark:text-gray-800 dark:hover:text-gray-400 font-extrabold"
           >
             @ZakariaL
           </a>

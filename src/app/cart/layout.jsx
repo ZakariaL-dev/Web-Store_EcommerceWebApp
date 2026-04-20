@@ -10,6 +10,7 @@ import { auth } from "@/lib/auth";
 
 // Shadcn Comp
 import { Toaster } from "@/components/ui/sonner";
+import { UserDarkProviders } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,11 +42,12 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <UserDarkProviders>
         <UserSync id={session?.user?.id} />
 
         <StoreNavBar user={session?.user} />
         {children}
-        <Toaster position="top-right" />
+        <Toaster position="top-right" /></UserDarkProviders>
       </body>
     </html>
   );

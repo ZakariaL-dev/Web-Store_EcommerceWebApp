@@ -87,9 +87,9 @@ const AccountProfileInfos = () => {
           return (
             <div
               key={i}
-              className="px-6 py-4 border-b-2 border-slate-300 flex items-center gap-1"
+              className="px-6 py-4 border-b-2 border-slate-300 dark:border-slate-700 flex items-center gap-1"
             >
-              <h1 className="w-1/3 text-slate-600">{c.name}</h1>
+              <h1 className="w-1/3 text-slate-600 font-semibold dark:text-stone-300">{c.name}</h1>
               <h2 className="text-slate-400">{c.value}</h2>
             </div>
           );
@@ -106,7 +106,7 @@ const AccountProfileInfos = () => {
           </Link>
         </Button>
         <Button
-          className="flex items-center gap-1 bg-red-800 hover:bg-red-700"
+          className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-slate-50"
           onClick={() => setOpenDelete(true)}
         >
           <AiOutlineUserDelete />

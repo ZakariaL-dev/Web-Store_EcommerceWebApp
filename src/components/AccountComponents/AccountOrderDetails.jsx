@@ -116,8 +116,8 @@ const AccountOrderDetails = ({ order, cancel }) => {
     <div className="py-6 px-3 lg:w-2/3 w-full space-y-6">
       <header className="text-4xl font-bold">Order Details</header>
       {/* order details */}
-      <main className="w-full bg-slate-100 rounded-2xl p-3 shadow-md">
-        <div className="grid md:grid-cols-[3fr_1fr] grid-cols-1">
+      <main className="w-full bg-slate-100 dark:bg-slate-800 dark:border-2 rounded-2xl p-3 shadow-md">
+        <div className="grid md:grid-cols-[2.75fr_1fr] grid-cols-1">
           {/* order is and date */}
           <div>
             <h1 className="font-bold text-xl">Order #{order._id.slice(-6)}</h1>
@@ -202,7 +202,7 @@ const AccountOrderDetails = ({ order, cancel }) => {
         {/* footer */}
         <div className="text-right">
           {order.status === "pending" && (
-            <Button className="bg-red-600 hover:bg-red-700" onClick={cancel}>
+            <Button className="bg-red-600 hover:bg-red-700 text-slate-50" onClick={cancel}>
               Cancel Order
             </Button>
           )}
@@ -210,7 +210,7 @@ const AccountOrderDetails = ({ order, cancel }) => {
       </main>
 
       {/* products display */}
-      <main className="w-full bg-slate-100 rounded-2xl p-3 shadow-md">
+      <main className="w-full bg-slate-100 dark:bg-slate-800 dark:border-2 rounded-2xl p-3 shadow-md">
         <h1 className="font-bold text-xl">Order Items</h1>
         <Separator className={"my-3 bg-gray-500"} />
         {/* details */}
@@ -232,8 +232,8 @@ const AccountOrderDetails = ({ order, cancel }) => {
                   <div>
                     <h1 className="mb-1 font-semibold">{p.product.title}</h1>
                     <div className="space-x-2">
-                      <Badge className="bg-teal-500">Color: {p.color}</Badge>
-                      <Badge className="bg-cyan-400">Size: {p.size}</Badge>
+                      <Badge className="bg-teal-500 text-slate-200">Color: {p.color}</Badge>
+                      <Badge className="bg-cyan-400 text-slate-200">Size: {p.size}</Badge>
                     </div>
                   </div>
                 </div>

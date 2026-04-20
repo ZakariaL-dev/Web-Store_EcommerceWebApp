@@ -30,7 +30,7 @@ const StoreCartCard = ({ item, onRemove }) => {
   };
 
   return (
-    <div className="flex items-start justify-between p-3 border-b-2 border-slate-200">
+    <div className="flex items-start justify-between p-3 border-b-2 border-slate-200 last:border-b-0 dark:border-slate-600">
       <div className="flex items-start gap-4">
         <Image
           src={product.previewImages[0]}
@@ -70,7 +70,7 @@ const StoreCartCard = ({ item, onRemove }) => {
         )}
         <Button
           variant={"ghost"}
-          className="text-red-800 hover:text-red-600 hover:bg-red-100"
+          className="text-red-800 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-300 mt-2"
           onClick={onRemove}
         >
           Remove

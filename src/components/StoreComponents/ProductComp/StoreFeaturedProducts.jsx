@@ -49,13 +49,13 @@ const StoreFeaturedProducts = () => {
 
   return (
     <div className="max-w-7xl mx-auto mb-8 overflow-hidden">
-      <header className="bg-slate-100 px-5 flex items-center justify-between py-2 font-bold text-xl text-slate-500 rounded-md mb-2.5">
+      <header className="bg-slate-100 dark:bg-slate-800 px-5 flex items-center justify-between py-2 font-bold text-xl text-slate-500 rounded-md mb-2.5">
         You might also like:
         <div>
           <Button
             variant="ghost"
             disabled={moving === 0}
-            className={"hover:bg-slate-200 p-2"}
+            className={"hover:bg-slate-200 dark:hover:bg-slate-700 p-2"}
             asChild
           >
             <IoMdArrowRoundBack
@@ -65,7 +65,7 @@ const StoreFeaturedProducts = () => {
           </Button>
           <Button
             variant="ghost"
-            className={"hover:bg-slate-200 p-2"}
+            className={"hover:bg-slate-200 dark:hover:bg-slate-700 p-2"}
             disabled={moving >= (displayProducts?.length || 0) - 5}
             asChild
           >

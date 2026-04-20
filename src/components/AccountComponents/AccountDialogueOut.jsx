@@ -8,7 +8,7 @@ import { Separator } from "../ui/separator";
 
 const AccountDialogueOut = ({ OpenToggle }) => {
   return (
-    <div className="absolute top-16 right-6 z-10 bg-slate-50 shadow-xl rounded-xl p-4">
+    <div className="absolute top-16 right-6 z-10 bg-slate-50 dark:bg-gray-700 shadow-xl rounded-xl p-4">
       <h1 className="mb-2 font-bold text-xl">Welcome Guest</h1>
       <p>Manage Cart, Orders & Wishlist</p>
       <Separator className="my-3" />

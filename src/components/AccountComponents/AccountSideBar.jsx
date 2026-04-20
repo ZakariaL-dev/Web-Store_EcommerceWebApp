@@ -78,7 +78,7 @@ const AccountSideBar = ({ user }) => {
       </div>
       <div
         className={`
-        fixed inset-y-0 left-0 z-50 w-full md:w-1/2 bg-white
+        fixed inset-y-0 left-0 z-50 w-full md:w-1/2 bg-white dark:bg-slate-950
         transition-transform duration-300 ease-in-out
         shadow-[10px_0_15px_-3px_rgba(0,0,0,0.1)]
         ${OpenSideBar ? "translate-x-0" : "-translate-x-full"}
@@ -98,7 +98,7 @@ const AccountSideBar = ({ user }) => {
             />
           </Button>
         </div>
-        <header className="flex gap-2 items-center border-2 border-slate-100 rounded-2xl p-3 mb-6">
+        <header className="flex gap-2 items-center border-2 border-slate-100 dark:border-slate-500 rounded-2xl p-3 mb-6">
           <Avatar className="w-16 h-16 text-2xl">
             <AvatarImage src={currentUser?.profileImage || user?.image} />
             <AvatarFallback>{currentUser.userName}</AvatarFallback>
@@ -111,7 +111,7 @@ const AccountSideBar = ({ user }) => {
         </header>
         {/*  */}
         <div>
-          <h1 className="font-bold text-2xl text-slate-700 mb-3">My Account</h1>
+          <h1 className="font-bold text-2xl text-slate-700 dark:text-slate-300 mb-3">My Account</h1>
           <div className="w-full border-2 border-slate-600 rounded-xl">
             {accountlinks.map((al, i) => {
               const fullPath = `/account/${al.link}`;
@@ -122,8 +122,8 @@ const AccountSideBar = ({ user }) => {
                   href={`/account/${al.link}`}
                   className={
                     isActive === true
-                      ? "flex items-center justify-between p-4 border-b-2 border-slate-600 last:border-b-0 bg-slate-100 first:rounded-t-xl last:rounded-b-xl hover:bg-slate-50"
-                      : "flex items-center justify-between p-4 border-b-2 border-slate-600 last:border-b-0 hover:bg-slate-50 first:rounded-t-xl last:rounded-b-xl"
+                      ? "flex items-center justify-between p-4 border-b-2 border-slate-600 last:border-b-0 bg-slate-100 first:rounded-t-xl last:rounded-b-xl dark:bg-slate-700 "
+                      : "flex items-center justify-between p-4 border-b-2 border-slate-600 last:border-b-0 hover:bg-slate-50 first:rounded-t-xl last:rounded-b-xl dark:hover:bg-slate-500"
                   }
                   onClick={() => {
                     setOpenSideBar(false);

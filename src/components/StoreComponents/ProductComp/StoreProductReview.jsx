@@ -42,7 +42,7 @@ const StoreProductReview = ({ pId, pImage }) => {
 
   return (
     <div className="mb-8">
-      <header className="bg-slate-100 px-6 py-2 font-bold text-xl text-slate-500 rounded-md mb-2.5 flex items-center justify-between">
+      <header className="bg-slate-100 dark:bg-slate-800 px-6 py-2 font-bold text-xl text-slate-500 rounded-md mb-2.5 flex items-center justify-between">
         <p>Reviews</p>
         {!hasUserAlreadyReviewed && (
           <Button

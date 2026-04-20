@@ -47,7 +47,7 @@ export function AccountDeleteDialogue({
             type="submit"
             disabled={loading}
             onClick={Delete}
-            className={"bg-red-600 hover:bg-red-400 md:w-[57%]"}
+            className={"bg-red-600 hover:bg-red-400 md:w-[57%] text-slate-50"}
           >
             {loading ? (
               <div className="flex items-center gap-2">

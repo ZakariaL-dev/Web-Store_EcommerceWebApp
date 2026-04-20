@@ -282,10 +282,10 @@ const StoreCheckoutPage = () => {
             >
               <div
                 onClick={() => setDeliveryPlace("Home")}
-                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300  ${
+                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 dark:bg-gray-600 bg-slate-100 dark:border-slate-300 ${
                   DeliveryPlace === "Home"
-                    ? " bg-slate-100 border-2"
-                    : " bg-slate-50 hover:shadow-md"
+                    ? " border-2"
+                    : " hover:shadow-md dark:shadow-slate-400/60"
                 }`}
               >
                 <RadioGroupItem value="Home" id="Home" />
@@ -294,10 +294,10 @@ const StoreCheckoutPage = () => {
               </div>
               <div
                 onClick={() => setDeliveryPlace("Bureau")}
-                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300  ${
+                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 dark:bg-gray-600 bg-slate-100 dark:border-slate-300 ${
                   DeliveryPlace === "Home"
-                    ? " bg-slate-50 hover:shadow-md"
-                    : " bg-slate-100 border-2"
+                    ? " hover:shadow-md dark:shadow-slate-400/60"
+                    : " border-2"
                 }`}
               >
                 <RadioGroupItem value="Bureau" id="Bureau" />
@@ -364,10 +364,10 @@ const StoreCheckoutPage = () => {
             >
               <div
                 onClick={() => setPayment("Cash")}
-                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 ${
+                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 dark:bg-gray-600 bg-slate-100 dark:border-slate-300 ${
                   Payment === "Cash"
-                    ? " bg-slate-100 border-2"
-                    : "bg-slate-50 hover:shadow-md"
+                    ? " border-2"
+                    : " hover:shadow-md dark:shadow-slate-400/60"
                 }`}
               >
                 <RadioGroupItem value="Cash" id="Cash" />
@@ -376,10 +376,10 @@ const StoreCheckoutPage = () => {
               </div>
               <div
                 onClick={() => setPayment("Card")}
-                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 ${
+                className={`flex items-center space-x-3 p-3 h-16 rounded-md cursor-pointer border-gray-800 transition-all ease-in-out duration-300 dark:bg-gray-600 bg-slate-100 dark:border-slate-300  ${
                   Payment === "Cash"
-                    ? " bg-slate-50 hover:shadow-md"
-                    : " bg-slate-100 border-2"
+                    ? " hover:shadow-md dark:shadow-slate-400/60"
+                    : " border-2"
                 }`}
               >
                 <RadioGroupItem value="Card" id="Card" />
@@ -392,7 +392,7 @@ const StoreCheckoutPage = () => {
 
         {/* Right Side: Order Summary */}
         <div>
-          <section className="bg-slate-50 p-6 rounded-xl border">
+          <section className="bg-slate-50 dark:bg-gray-700 p-6 rounded-xl border">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
             {checkout.map((item) => (
               <div key={item._id} className="flex justify-between mb-3">
@@ -421,7 +421,7 @@ const StoreCheckoutPage = () => {
               <h1>Coupon Discount</h1>
               {appliedCoupon ? (
                 <div className="flex flex-col items-end">
-                  <span className="text-green-600 font-bold">
+                  <span className="text-green-600 dark:text-lime-400 font-bold">
                     -{appliedCoupon.discount}
                   </span>
                   <Button
@@ -435,7 +435,7 @@ const StoreCheckoutPage = () => {
               ) : (
                 <Button
                   variant={"link"}
-                  className="font-bold text-blue-600 px-0"
+                  className="font-bold text-blue-600 dark:text-cyan-500 px-0"
                   onClick={() => setOpenCoupon(true)}
                 >
                   Apply Coupon
@@ -452,7 +452,7 @@ const StoreCheckoutPage = () => {
             </div>
             <div className="flex justify-between font-bold text-lg">
               <span>Total to Pay</span>
-              <span className="text-indigo-900">
+              <span className="text-indigo-900 dark:text-indigo-500">
                 {finalTotal.toFixed(2)} Dz
               </span>
             </div>

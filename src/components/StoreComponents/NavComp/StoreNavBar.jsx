@@ -35,7 +35,9 @@ import StoreShoppingCart from "../CartComp/StoreShoppingCart";
 // Stores
 import { useUserStore } from "@/utils/UserStore";
 import { useCartStore } from "@/utils/CartStore";
-
+import { useTheme } from "next-themes";
+import { FiSun } from "react-icons/fi";
+import { BsMoonStars } from "react-icons/bs";
 
 const StoreNavBar = ({ user }) => {
   const [openDialogue, setOpenDialogue] = useState(false);
@@ -70,9 +72,11 @@ const StoreNavBar = ({ user }) => {
   const currentCategory = searchParams.get("category");
   const { cart } = useCartStore();
 
+  const { theme, setTheme } = useTheme();
+
   return (
     <>
-      <nav className="flex items-center justify-between px-6 py-3 border-b-2 sticky top-0 left-0 right-0 bg-white z-50">
+      <nav className="flex items-center justify-between px-6 py-3 border-b-2 sticky top-0 left-0 right-0 bg-white dark:bg-gray-800 z-50">
         <div className="flex items-center gap-2.5">
           <Button variant="ghost" className="p-2 lg:hidden" asChild>
             {openMiniNav === false ? (
@@ -97,7 +101,11 @@ const StoreNavBar = ({ user }) => {
                 pathname === "/search" && currentCategory === ml.link;
 
               return (
-                <Button key={i} variant={isActive ? "default" : "ghost"}>
+                <Button
+                  key={i}
+                  variant={isActive ? "default" : "ghost"}
+                  className={"dark:hover:bg-slate-600"}
+                >
                   <Link href={`/search?category=${ml.link}`}>{ml.name}</Link>
                 </Button>
               );
@@ -112,16 +120,33 @@ const StoreNavBar = ({ user }) => {
             </InputGroupAddon>
           </InputGroup>
           <div className="flex items-center gap-1">
+            <Button variant="ghost" className="p-2" asChild>
+              {theme === "dark" ? (
+                <FiSun
+                  className="w-9 h-9 dark:hover:bg-slate-600"
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                />
+              ) : (
+                <BsMoonStars
+                  className="w-8 h-8"
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                />
+              )}
+            </Button>
             {user ? (
               <>
-                <Button variant="ghost" className={"w-8 h-8"} asChild>
+                <Button
+                  variant="ghost"
+                  className={"w-8 h-8 dark:hover:bg-slate-600"}
+                  asChild
+                >
                   <Link href="/account/wishlist">
                     <IoIosHeartEmpty />
                   </Link>
                 </Button>
                 <Button
                   variant="ghost"
-                  className="p-1 w-10 h-10"
+                  className="p-1 w-10 h-10 dark:hover:bg-slate-600"
                   onClick={() => {
                     setOpenShopCart(true);
                   }}
@@ -155,7 +180,7 @@ const StoreNavBar = ({ user }) => {
             ) : (
               <Button variant="ghost" className="p-2" asChild>
                 <IoPersonOutline
-                  className="w-10 h-10"
+                  className="w-10 h-10 dark:hover:bg-slate-600"
                   onClick={() => setOpenDialogue(!openDialogue)}
                 />
               </Button>
@@ -163,7 +188,7 @@ const StoreNavBar = ({ user }) => {
           </div>
         </div>
         <ul
-          className={`w-full absolute top-16 left-0 bg-white border-b-2 shadow-xl lg:hidden transform transition-transform duration-300 ease-in-out ${
+          className={`w-full absolute top-16 left-0 bg-white dark:bg-gray-800 border-b-2 shadow-xl lg:hidden transform transition-transform duration-300 ease-in-out ${
             openMiniNav ? "translate-y-0" : "-translate-y-100"
           }`}
         >
@@ -171,7 +196,7 @@ const StoreNavBar = ({ user }) => {
             return (
               <li
                 key={i}
-                className="w-full px-6 py-2 last:pb-4 transition-all ease-in-out hover:bg-slate-100"
+                className="w-full px-6 py-2 last:pb-4 transition-all ease-in-out hover:bg-slate-100 dark:hover:bg-gray-600"
               >
                 <Link
                   className="w-full"
@@ -195,8 +220,6 @@ const StoreNavBar = ({ user }) => {
           OpenToggle={setOpenShopCart}
         />
       </nav>
-
-      {/* <AccountDialogueIn OpenToggle={setOpenDialogue} /> */}
     </>
   );
 };

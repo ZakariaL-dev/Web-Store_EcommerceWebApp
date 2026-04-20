@@ -21,7 +21,7 @@ const ContactMsg = () => {
     comment: "",
   });
   return (
-    <div className="bg-slate-50 p-4 rounded-2xl shadow-lg">
+    <div className="bg-slate-50 dark:bg-gray-900 p-4 rounded-2xl shadow-lg">
       <header className="text-2xl font-bold mb-7 ">Send us a Message</header>
       <form className="space-y-6">
         {/* user name */}

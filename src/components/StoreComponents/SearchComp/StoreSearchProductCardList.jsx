@@ -114,7 +114,7 @@ const StoreSearchProductCardList = ({ product }) => {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className={`w-full mb-3 h-64 flex rounded-2xl overflow-hidden transition-all duration-200 ease-in-out hover:shadow-xl border-2 group`}
+      className={`w-full mb-3 h-64 flex rounded-2xl overflow-hidden transition-all duration-200 ease-in-out hover:shadow-xl border-2 group dark:border-gray-500 dark:hover:shadow-slate-200/60`}
     >
       <div className="relative overflow-hidden w-40">
         <Image
@@ -131,12 +131,14 @@ const StoreSearchProductCardList = ({ product }) => {
           <></>
         )}
         {product.status === "on sale" ? (
-          <Badge className="absolute top-1 left-1 bg-red-700">On Sale</Badge>
+          <Badge className="absolute top-1 left-1 bg-red-700 text-slate-100">
+            On Sale
+          </Badge>
         ) : (
           <></>
         )}
       </div>
-      <div className="p-3 flex flex-col justify-around w-full bg-white">
+      <div className="p-3 flex flex-col justify-around w-full bg-white dark:bg-gray-800">
         <div>
           <h1 className="text-xl mb-1 font-bold">{product.title}</h1>
           <h1 className="md:text-sm text-xs mb-4">{product.description}</h1>
@@ -156,7 +158,9 @@ const StoreSearchProductCardList = ({ product }) => {
               </p>
             </div>
           ) : (
-            <p className="mb-3 font-bold text-gray-500">{product.price} Dz</p>
+            <p className="mb-3 font-bold text-gray-500 dark:text-stone-400">
+              {product.price} Dz
+            </p>
           )}
           {/*  */}
           <div className="flex gap-3">
@@ -199,15 +203,15 @@ const StoreSearchProductCardList = ({ product }) => {
                 onClick={(e) => handleToggleFavorite(e)}
                 asChild
               >
-                <FaRegHeart className="w-9 h-9" />
+                <FaRegHeart className="w-9 h-9 dark:hover:bg-gray-600/70" />
               </Button>
             )}
             <Button
               variant="ghost"
               className={`p-2 ${
                 isInCompare
-                  ? "text-blue-600 hover:text-blue-800 bg-blue-50"
-                  : ""
+                  ? "text-blue-600 hover:text-blue-400"
+                  : "dark:hover:bg-gray-600/70"
               }`}
               onClick={(e) => handleToggleCompare(e)}
               asChild
