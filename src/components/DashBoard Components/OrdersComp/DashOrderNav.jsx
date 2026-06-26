@@ -18,6 +18,7 @@ import { IoMdArrowRoundForward } from "react-icons/io";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
+import { RxReload } from "react-icons/rx";
 
 // Stores
 import { useOrderStore } from "@/utils/OrderStore";
@@ -71,33 +72,35 @@ const DashOrderNav = () => {
   }
   return (
     <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/5 md:flex hidden">
-        <InputGroup>
-          <InputGroupInput placeholder="Search Order" />
-          <InputGroupAddon>
-            <MdSearch />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            {orders.length} results
-          </InputGroupAddon>
-        </InputGroup>
+      <div className="max-w-1/3 flex items-center gap-2">
+        <div className="md:flex hidden">
+          <InputGroup>
+            <InputGroupInput placeholder="Search Order" />
+            <InputGroupAddon>
+              <MdSearch />
+            </InputGroupAddon>
+            <InputGroupAddon align="inline-end">
+              {orders.length} results
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+        <Button variant="outline" className="flex items-center gap-2" onClick={getAllOrders}>
+          <RxReload />
+        </Button>
       </div>
       <div className="flex items-center gap-2.5">
         {/* <Button variant="outline">
           <FaFilter />
           Filter
         </Button> */}
-          <NativeSelect
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-          >
-            <NativeSelectOption value="10">10</NativeSelectOption>
-            <NativeSelectOption value="20">20</NativeSelectOption>
-            <NativeSelectOption value="30">30</NativeSelectOption>
-            <NativeSelectOption value="40">40</NativeSelectOption>
-            <NativeSelectOption value="50">50</NativeSelectOption>
-          </NativeSelect>
-          <p className="md:block hidden">Per page </p>
+        <NativeSelect value={itemsPerPage} onChange={handleItemsPerPageChange}>
+          <NativeSelectOption value="10">10</NativeSelectOption>
+          <NativeSelectOption value="20">20</NativeSelectOption>
+          <NativeSelectOption value="30">30</NativeSelectOption>
+          <NativeSelectOption value="40">40</NativeSelectOption>
+          <NativeSelectOption value="50">50</NativeSelectOption>
+        </NativeSelect>
+        <p className="md:block hidden">Per page </p>
         <Input
           type="number"
           value={currentPage}

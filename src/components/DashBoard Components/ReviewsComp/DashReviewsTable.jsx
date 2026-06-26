@@ -29,6 +29,7 @@ import { useEffect } from "react";
 import { FaCaretRight } from "react-icons/fa6";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import DashAlertDelete from "../DashAlertDelete";
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashReviewsTable = () => {
   const router = useRouter();
@@ -43,6 +44,8 @@ const DashReviewsTable = () => {
     HandeResults(success, message);
   };
 
+  const { searchRslts } = useSearchStore();
+
   if (!reviews) {
     return (
       <div className="flex h-32 items-center justify-center text-muted-foreground">
@@ -50,6 +53,10 @@ const DashReviewsTable = () => {
       </div>
     );
   }
+
+  const displayedProducts =
+    searchRslts && searchRslts.length > 0 ? searchRslts : reviews;
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -64,8 +71,8 @@ const DashReviewsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {reviews.length > 0 ? (
-            reviews.map((r) => {
+          {displayedProducts.length > 0 ? (
+            displayedProducts.map((r) => {
               return (
                 <TableRow key={r._id}>
                   {/* Customer Cell */}
@@ -132,7 +139,12 @@ const DashReviewsTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No reviews found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No reviews found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

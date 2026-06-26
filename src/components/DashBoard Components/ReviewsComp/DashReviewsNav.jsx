@@ -18,13 +18,14 @@ import { IoMdArrowRoundForward } from "react-icons/io";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
+import { RxReload } from "react-icons/rx";
 
 // React
 import { useEffect, useState } from "react";
 
 // Stores
 import { useReviewStore } from "@/utils/ReviewStore";
-
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashReviewsNav = () => {
   const { reviews, getAllReviews } = useReviewStore();
@@ -32,16 +33,27 @@ const DashReviewsNav = () => {
     getAllReviews();
   }, [getAllReviews]);
 
+  // search system
+  const { getAllSearchRslts, searchRslts } = useSearchStore();
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    getAllSearchRslts("reviews", searchValue);
+  }, [searchValue]);
+
+  const TotalNum =
+    searchRslts && searchRslts.length > 0 ? searchRslts.length : reviews.length;
+
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(reviews.length / itemsPerPage) || 1;
+  const totalPages = Math.ceil(TotalNum / itemsPerPage) || 1;
 
   const handleItemsPerPageChange = (e) => {
     const newItemsPerPage = Number(e.target.value);
     setItemsPerPage(newItemsPerPage);
 
-    const nextTotalPages = Math.ceil(reviews.length / newItemsPerPage) || 1;
+    const nextTotalPages = Math.ceil(TotalNum / newItemsPerPage) || 1;
 
     if (currentPage > nextTotalPages) {
       setCurrentPage(nextTotalPages);
@@ -61,16 +73,32 @@ const DashReviewsNav = () => {
 
   return (
     <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/5 md:flex hidden">
-        <InputGroup>
-          <InputGroupInput placeholder="Search Review" />
-          <InputGroupAddon>
-            <MdSearch />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            {reviews.length} results
-          </InputGroupAddon>
-        </InputGroup>
+      <div className="max-w-1/3 flex items-center gap-2">
+        <div className="md:flex hidden">
+          <InputGroup>
+            <InputGroupInput
+              placeholder="Search Comment"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+            <InputGroupAddon>
+              <MdSearch />
+            </InputGroupAddon>
+            <InputGroupAddon align="inline-end">
+              {TotalNum} results
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2"
+          onClick={() => {
+            getAllReviews();
+            getAllSearchRslts("reviews", searchValue);
+          }}
+        >
+          <RxReload />
+        </Button>
       </div>
       <div className="flex items-center gap-2.5">
         {/* <Button variant="outline">

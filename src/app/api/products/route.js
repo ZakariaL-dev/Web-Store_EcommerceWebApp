@@ -14,20 +14,27 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const opt = searchParams.get("opt");
     const limitParam = searchParams.get("limit");
-    const page = parseInt(searchParams.get("page")) || 1;
 
-    const limit =
-      limitParam === "all" || !limitParam ? 0 : parseInt(limitParam);
+    const parsedPage = parseInt(searchParams.get("page"), 10);
+    const page = isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
+
+    let limit = 0;
+    if (limitParam && limitParam !== "all") {
+      const parsedLimit = parseInt(limitParam, 10);
+      limit = isNaN(parsedLimit) ? 0 : parsedLimit;
+    }
 
     const skip = limit > 0 ? (page - 1) * limit : 0;
     const query = opt && opt !== "all" ? { status: opt } : {};
 
-    const Products = await Product.find(query)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+    let mongooseQuery = Product.find(query).sort({ createdAt: -1 }).skip(skip);
 
-    const total = await Product.countDocuments();
+    if (limit > 0) {
+      mongooseQuery = mongooseQuery.limit(limit);
+    }
+
+    const Products = await mongooseQuery;
+    const total = await Product.countDocuments(query);
 
     return NextResponse.json({ Products, total }, { status: 200 });
   } catch (error) {

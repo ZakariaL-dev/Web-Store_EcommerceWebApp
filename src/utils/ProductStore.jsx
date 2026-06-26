@@ -94,9 +94,15 @@ export const useProductStore = create((set) => {
     getAllProducts: async (opt, page, limit) => {
       try {
         const categoryKey = opt || "all";
-        const url = opt
-          ? `/api/products?opt=${opt}&page=${page}&limit=${limit}`
-          : `/api/products?page=${page}&limit=${limit}`;
+
+        const params = new URLSearchParams();
+        if (opt && opt !== "all") params.append("opt", opt);
+        if (page !== null && page !== undefined) params.append("page", page);
+        if (limit !== null && limit !== undefined)
+          params.append("limit", limit);
+
+        const url = `/api/products?${params.toString()}`;
+
         const res = await fetch(url);
 
         const Data = await res.json();

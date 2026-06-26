@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 // Next
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 // React Icons
 import { FaCaretRight } from "react-icons/fa6";
@@ -28,13 +28,14 @@ import { useProductStore } from "@/utils/ProductStore";
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
 import DashAlertDelete from "../DashAlertDelete";
-
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashProductTable = () => {
   const router = useRouter();
 
   const { products, deleteProduct } = useProductStore();
-  
+  const { searchRslts } = useSearchStore();
+
   if (!products) {
     return (
       <div className="flex h-32 items-center justify-center text-muted-foreground">
@@ -42,6 +43,9 @@ const DashProductTable = () => {
       </div>
     );
   }
+
+  const displayedProducts =
+    searchRslts && searchRslts.length > 0 ? searchRslts : products["all"];
 
   const HandleDeleteProduct = async (id) => {
     const { success, message } = await deleteProduct(id);
@@ -92,8 +96,8 @@ const DashProductTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products["all"].length > 0 ? (
-            products["all"].map((p, i) => {
+          {displayedProducts.length > 0 ? (
+            displayedProducts.map((p, i) => {
               return (
                 <TableRow key={p._id}>
                   <TableCell>
@@ -187,7 +191,12 @@ const DashProductTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No products found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No products found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

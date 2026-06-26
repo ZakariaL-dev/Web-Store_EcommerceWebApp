@@ -18,6 +18,7 @@ import { IoMdArrowRoundForward } from "react-icons/io";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
+import { RxReload } from "react-icons/rx";
 
 // Stores
 import { useUserStore } from "@/utils/UserStore";
@@ -61,16 +62,25 @@ const DashCustomersNav = () => {
 
   return (
     <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/5 md:flex hidden">
-        <InputGroup>
-          <InputGroupInput placeholder="Search User" />
-          <InputGroupAddon>
-            <MdSearch />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            {Users.length} results
-          </InputGroupAddon>
-        </InputGroup>
+      <div className="max-w-1/3 flex items-center gap-2">
+        <div className="md:flex hidden">
+          <InputGroup>
+            <InputGroupInput placeholder="Search UserName" />
+            <InputGroupAddon>
+              <MdSearch />
+            </InputGroupAddon>
+            <InputGroupAddon align="inline-end">
+              {Users.length} results
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2"
+          onClick={getAllUsers}
+        >
+          <RxReload />
+        </Button>
       </div>
       <div className="flex items-center gap-2.5">
         {/* <Button variant="outline">
