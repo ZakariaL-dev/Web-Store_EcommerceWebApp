@@ -22,9 +22,6 @@ import { useReviewStore } from "@/utils/ReviewStore";
 // Next
 import { useRouter } from "next/navigation";
 
-// React
-import { useEffect } from "react";
-
 // React Icons
 import { FaCaretRight } from "react-icons/fa6";
 import { MdOutlineDeleteForever } from "react-icons/md";
@@ -34,10 +31,7 @@ import { useSearchStore } from "@/utils/SearchStore";
 const DashReviewsTable = () => {
   const router = useRouter();
 
-  const { reviews, getAllReviews, deleteReview } = useReviewStore();
-  useEffect(() => {
-    getAllReviews();
-  }, [getAllReviews]);
+  const { reviews, deleteReview } = useReviewStore();
 
   const handleDeleteReview = async (id) => {
     const { success, message } = await deleteReview(id);
@@ -54,7 +48,7 @@ const DashReviewsTable = () => {
     );
   }
 
-  const displayedProducts =
+  const displayedReviews =
     searchRslts && searchRslts.length > 0 ? searchRslts : reviews;
 
   return (
@@ -71,8 +65,8 @@ const DashReviewsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {displayedProducts.length > 0 ? (
-            displayedProducts.map((r) => {
+          {displayedReviews.length > 0 ? (
+            displayedReviews.map((r) => {
               return (
                 <TableRow key={r._id}>
                   {/* Customer Cell */}

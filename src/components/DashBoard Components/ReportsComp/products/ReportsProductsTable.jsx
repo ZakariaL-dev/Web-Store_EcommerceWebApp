@@ -30,7 +30,7 @@ import DashReportStatus from "../DashReportStatus";
 
 // Next
 import { useRouter } from "next/navigation";
-
+import { useSearchStore } from "@/utils/SearchStore";
 
 const ReportsProductsTable = () => {
   const router = useRouter();
@@ -44,6 +44,8 @@ const ReportsProductsTable = () => {
 
   const [ReportId, setReportId] = useState(null);
   const [ReportStatus, setReportStatus] = useState(null);
+
+  const { searchRslts } = useSearchStore();
 
   const StatusSwitch = (sts) => {
     switch (sts) {
@@ -93,6 +95,10 @@ const ReportsProductsTable = () => {
       </div>
     );
   }
+
+  const displayedProductReports =
+    searchRslts && searchRslts.length > 0 ? searchRslts : ProductReports;
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -108,8 +114,8 @@ const ReportsProductsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {ProductReports.length > 0 ? (
-            ProductReports.map((p) => {
+          {displayedProductReports.length > 0 ? (
+            displayedProductReports.map((p) => {
               return (
                 <TableRow key={p._id}>
                   <TableCell className={"w-[200px]"}>
@@ -190,7 +196,12 @@ const ReportsProductsTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No products reports found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No products reports found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

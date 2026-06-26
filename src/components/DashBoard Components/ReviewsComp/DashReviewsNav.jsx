@@ -77,7 +77,7 @@ const DashReviewsNav = () => {
         <div className="md:flex hidden">
           <InputGroup>
             <InputGroupInput
-              placeholder="Search Comment"
+              placeholder="Search by title"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />

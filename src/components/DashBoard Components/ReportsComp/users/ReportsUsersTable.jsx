@@ -27,7 +27,7 @@ import { TbEyeSearch } from "react-icons/tb";
 
 // My Components
 import DashReportStatus from "../DashReportStatus";
-
+import { useSearchStore } from "@/utils/SearchStore";
 
 const ReportsUsersTable = () => {
   const { UserReports, fetchReports } = useReportStore();
@@ -40,6 +40,8 @@ const ReportsUsersTable = () => {
   const [ReportId, setReportId] = useState(null);
   const [ReportStatus, setReportStatus] = useState(null);
 
+  const { searchRslts } = useSearchStore();
+
   if (!UserReports) {
     return (
       <div className="flex h-32 items-center justify-center text-muted-foreground">
@@ -47,6 +49,9 @@ const ReportsUsersTable = () => {
       </div>
     );
   }
+
+  const displayedUserReports =
+    searchRslts && searchRslts.length > 0 ? searchRslts : UserReports;
 
   const StatusSwitch = (sts) => {
     switch (sts) {
@@ -105,8 +110,8 @@ const ReportsUsersTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {UserReports.length > 0 ? (
-            UserReports.map((u) => {
+          {displayedUserReports.length > 0 ? (
+            displayedUserReports.map((u) => {
               return (
                 <TableRow key={u._id}>
                   <TableCell className="font-medium text-blue-700">
@@ -198,7 +203,12 @@ const ReportsUsersTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No users reports found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No users reports found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

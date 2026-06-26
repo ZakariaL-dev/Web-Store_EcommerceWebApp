@@ -8,19 +8,19 @@ import ProductReport from "@/models/ProductReportSchema";
 import { NextResponse } from "next/server";
 
 
-export async function GET() {
-  try {
-    await connectDB();
-    const ProductReports = await ProductReport.find({})
-      .populate("reportedBy", "userName email profileImage")
-      .populate("product", "previewImages title slug")
-      .sort({ createdAt: -1 });;
+  export async function GET() {
+    try {
+      await connectDB();
+      const ProductReports = await ProductReport.find({})
+        .populate("reportedBy", "userName email profileImage")
+        .populate("product", "previewImages title slug")
+        .sort({ createdAt: -1 });;
 
-    return NextResponse.json({ ProductReports }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ ProductReports }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
   }
-}
 
 export async function POST(request) {
   try {

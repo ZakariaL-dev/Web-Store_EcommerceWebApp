@@ -14,7 +14,7 @@ export async function GET() {
     const Reviews = await Review.find({})
       .populate("user", "email profileImage")
       .populate("product", "title slug")
-      .sort({ createdAt: -1 });;
+      .sort({ createdAt: -1 });
 
     return NextResponse.json({ Reviews }, { status: 200 });
   } catch (error) {

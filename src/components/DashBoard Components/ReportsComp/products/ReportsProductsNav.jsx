@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 
 // Stores
 import { useReportStore } from "@/utils/ReportStore";
+import { useSearchStore } from "@/utils/SearchStore";
 
 const ReportsProductsNav = () => {
   const { ProductReports, fetchReports } = useReportStore();
@@ -35,14 +36,26 @@ const ReportsProductsNav = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(ProductReports.length / itemsPerPage) || 1;
+  // search system
+  const { getAllSearchRslts, searchRslts } = useSearchStore();
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    getAllSearchRslts("productReport", searchValue);
+  }, [searchValue]);
+
+  const TotalNum =
+    searchRslts && searchRslts.length > 0
+      ? searchRslts.length
+      : ProductReports.length;
+
+  const totalPages = Math.ceil(TotalNum / itemsPerPage) || 1;
 
   const handleItemsPerPageChange = (e) => {
     const newItemsPerPage = Number(e.target.value);
     setItemsPerPage(newItemsPerPage);
 
-    const nextTotalPages =
-      Math.ceil(ProductReports.length / newItemsPerPage) || 1;
+    const nextTotalPages = Math.ceil(TotalNum / newItemsPerPage) || 1;
 
     if (currentPage > nextTotalPages) {
       setCurrentPage(nextTotalPages);
@@ -65,19 +78,26 @@ const ReportsProductsNav = () => {
       <div className="max-w-1/3 flex items-center gap-2">
         <div className="md:flex hidden">
           <InputGroup>
-            <InputGroupInput placeholder="Search Cause" />
+            <InputGroupInput
+              placeholder="Search by comment"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
             <InputGroupAddon>
               <MdSearch />
             </InputGroupAddon>
             <InputGroupAddon align="inline-end">
-              {ProductReports.length} results
+              {TotalNum} results
             </InputGroupAddon>
           </InputGroup>
         </div>
         <Button
           variant="outline"
           className="flex items-center gap-2"
-          onClick={() => fetchReports("products")}
+          onClick={() => {
+            fetchReports("products");
+            getAllSearchRslts("productReport", searchValue);
+          }}
         >
           <RxReload />
         </Button>

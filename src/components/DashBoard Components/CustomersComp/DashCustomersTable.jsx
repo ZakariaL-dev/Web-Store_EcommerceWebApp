@@ -27,14 +27,16 @@ import { TbLockCancel } from "react-icons/tb";
 // Utils
 import { HandeResults } from "@/lib/HandeResults";
 import DashAlertDelete from "../DashAlertDelete";
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashCustomersTable = () => {
-  const { Users, getAllUsers, deleteUser, toggleBlockUser } = useUserStore();
+  const { Users, deleteUser, toggleBlockUser } = useUserStore();
   const { orders, getAllOrders } = useOrderStore();
   useEffect(() => {
-    getAllUsers();
     getAllOrders();
-  }, [getAllUsers, getAllOrders]);
+  }, [getAllOrders]);
+
+  const { searchRslts } = useSearchStore();
 
   const handleDeleteUser = async (id) => {
     const { success, message } = await deleteUser(id);
@@ -53,6 +55,10 @@ const DashCustomersTable = () => {
       </div>
     );
   }
+
+  const displayedUsers =
+    searchRslts && searchRslts.length > 0 ? searchRslts : Users;
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -68,8 +74,8 @@ const DashCustomersTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Users.length > 0 ? (
-            Users.map((u) => {
+          {displayedUsers.length > 0 ? (
+            displayedUsers.map((u) => {
               return (
                 <TableRow key={u._id}>
                   {/* Customer Cell */}
@@ -164,7 +170,12 @@ const DashCustomersTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No users found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No users found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>
