@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 // Stores
 import { useProductStore } from "@/utils/ProductStore";
 import { useSearchStore } from "@/utils/SearchStore";
+import DashFilterSideBar from "../DashFilterSideBar";
 
 const DashProductNav = () => {
   const { total, getAllProducts } = useProductStore();
@@ -38,15 +39,28 @@ const DashProductNav = () => {
   }, [getAllProducts, currentPage, itemsPerPage]);
 
   // search system
-  const { getAllSearchRslts, searchRslts } = useSearchStore();
+  const { getAllSearchRslts, searchRslts, filterRslts, clearSearch, clearAll } =
+    useSearchStore();
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    getAllSearchRslts("products", searchValue);
+    if (searchValue.trim() !== "") {
+      getAllSearchRslts("products", searchValue);
+    } else {
+      clearSearch();
+    }
   }, [searchValue]);
 
-  const TotalNum =
-    searchRslts && searchRslts.length > 0 ? searchRslts.length : total;
+  const isSearching = searchValue && searchValue.trim() !== "" && searchRslts;
+  const isFiltering = filterRslts;
+
+  let TotalNum = total;
+
+  if (isSearching) {
+    TotalNum = searchRslts.length;
+  } else if (isFiltering) {
+    TotalNum = filterRslts.length;
+  }
 
   const totalPages = Math.ceil(TotalNum / itemsPerPage) || 1;
 
@@ -72,74 +86,91 @@ const DashProductNav = () => {
   const handleNext = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
+  //filter
+  const [filterToggle, setFilterToggle] = useState(false);
+
   return (
-    <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/3 flex items-center gap-2">
-        <div className="md:flex hidden">
-          <InputGroup>
-            <InputGroupInput
-              placeholder="Search by name"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <InputGroupAddon>
-              <MdSearch />
-            </InputGroupAddon>
-            <InputGroupAddon align="inline-end">
-              {TotalNum} results
-            </InputGroupAddon>
-          </InputGroup>
+    <>
+      <div className="flex lg:items-center lg:justify-between mb-3 relative lg:flex-row flex-col gap-3">
+        <div className="lg:max-w-1/3 flex items-center gap-2">
+          <div>
+            <InputGroup>
+              <InputGroupInput
+                placeholder="Search by name"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <InputGroupAddon>
+                <MdSearch />
+              </InputGroupAddon>
+              <InputGroupAddon align="inline-end">
+                {TotalNum} results
+              </InputGroupAddon>
+            </InputGroup>
+          </div>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() => {
+              getAllProducts(null, currentPage, itemsPerPage);
+              setSearchValue("");
+              clearAll();
+            }}
+          >
+            <RxReload />
+          </Button>
         </div>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2"
-          onClick={() => {
-            getAllProducts(null, currentPage, itemsPerPage);
-            getAllSearchRslts("products", searchValue);
-          }}
-        >
-          <RxReload />
-        </Button>
-      </div>
-      <div className="flex items-center gap-2.5">
-        {/* <Button variant="outline">
-          <FaFilter />
-          Filter
-        </Button> */}
-        <NativeSelect value={itemsPerPage} onChange={handleItemsPerPageChange}>
-          <NativeSelectOption value="10">10</NativeSelectOption>
-          <NativeSelectOption value="20">20</NativeSelectOption>
-          <NativeSelectOption value="30">30</NativeSelectOption>
-          <NativeSelectOption value="40">40</NativeSelectOption>
-          <NativeSelectOption value="50">50</NativeSelectOption>
-        </NativeSelect>
-        <p className="md:block hidden">Per page </p>
-        <Input
-          type="number"
-          value={currentPage}
-          onChange={handlePageInputChange}
-          max={totalPages}
-          min={1}
-          className="w-16"
+        <div className="flex items-center gap-2.5">
+          <Button
+            variant="outline"
+            onClick={() => setFilterToggle(!filterToggle)}
+          >
+            <FaFilter />
+            Filters
+          </Button>
+          <NativeSelect
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+          >
+            <NativeSelectOption value="10">10</NativeSelectOption>
+            <NativeSelectOption value="20">20</NativeSelectOption>
+            <NativeSelectOption value="30">30</NativeSelectOption>
+            <NativeSelectOption value="40">40</NativeSelectOption>
+            <NativeSelectOption value="50">50</NativeSelectOption>
+          </NativeSelect>
+          Per page
+          <Input
+            type="number"
+            value={currentPage}
+            onChange={handlePageInputChange}
+            max={totalPages}
+            min={1}
+            className="w-16"
+          />
+          of
+          <Input type="number" value={totalPages} disabled className="w-16" />
+          <Button
+            variant="ghost"
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+          >
+            <IoMdArrowRoundBack />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+          >
+            <IoMdArrowRoundForward />
+          </Button>
+        </div>
+        <DashFilterSideBar
+          toggle={filterToggle}
+          setToggle={setFilterToggle}
+          type={"products"}
         />
-        of
-        <Input type="number" value={totalPages} disabled className="w-16" />
-        <Button
-          variant="ghost"
-          onClick={handlePrev}
-          disabled={currentPage === 1}
-        >
-          <IoMdArrowRoundBack />
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-        >
-          <IoMdArrowRoundForward />
-        </Button>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -38,18 +38,18 @@ const DashReviewsTable = () => {
     HandeResults(success, message);
   };
 
-  const { searchRslts } = useSearchStore();
+  const { searchRslts, filterRslts } = useSearchStore();
 
-  if (!reviews) {
-    return (
-      <div className="flex h-32 items-center justify-center text-muted-foreground">
-        Loading Reviews...
-      </div>
-    );
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
+
+  let displayedReviews = reviews;
+
+  if (isSearchActive) {
+    displayedReviews = searchRslts;
+  } else if (isFilterActive) {
+    displayedReviews = filterRslts;
   }
-
-  const displayedReviews =
-    searchRslts && searchRslts.length > 0 ? searchRslts : reviews;
 
   return (
     <div className="rounded-md border">
@@ -94,7 +94,11 @@ const DashReviewsTable = () => {
 
                   {/* Contact Info - Stacked layout */}
                   <TableCell className="space-y-1.5">
-                    <Rating size={17} value={r.rating} readOnly />
+                    <div className="flex items-center gap-1">
+                      <Rating size={17} value={r.rating} readOnly /> {" - "}
+                      <p className="font-medium text-slate-500">{r.rating} stars</p>
+                    </div>
+
                     <h1 className="font-semibold">{r.timeOfSubmit}</h1>
                     <h1>
                       Id:{" "}

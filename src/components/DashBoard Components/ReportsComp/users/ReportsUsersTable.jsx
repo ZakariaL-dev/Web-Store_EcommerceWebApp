@@ -40,18 +40,18 @@ const ReportsUsersTable = () => {
   const [ReportId, setReportId] = useState(null);
   const [ReportStatus, setReportStatus] = useState(null);
 
-  const { searchRslts } = useSearchStore();
+  const { searchRslts, filterRslts } = useSearchStore();
 
-  if (!UserReports) {
-    return (
-      <div className="flex h-32 items-center justify-center text-muted-foreground">
-        Loading reports...
-      </div>
-    );
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
+
+  let displayedUserReports = UserReports;
+
+  if (isSearchActive) {
+    displayedUserReports = searchRslts;
+  } else if (isFilterActive) {
+    displayedUserReports = filterRslts;
   }
-
-  const displayedUserReports =
-    searchRslts && searchRslts.length > 0 ? searchRslts : UserReports;
 
   const StatusSwitch = (sts) => {
     switch (sts) {

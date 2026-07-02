@@ -36,7 +36,7 @@ const DashCustomersTable = () => {
     getAllOrders();
   }, [getAllOrders]);
 
-  const { searchRslts } = useSearchStore();
+  const { searchRslts, filterRslts } = useSearchStore();
 
   const handleDeleteUser = async (id) => {
     const { success, message } = await deleteUser(id);
@@ -48,16 +48,16 @@ const DashCustomersTable = () => {
     HandeResults(success, message);
   };
 
-  if (!Users) {
-    return (
-      <div className="flex h-32 items-center justify-center text-muted-foreground">
-        Loading Users...
-      </div>
-    );
-  }
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
 
-  const displayedUsers =
-    searchRslts && searchRslts.length > 0 ? searchRslts : Users;
+  let displayedUsers = Users;
+
+  if (isSearchActive) {
+    displayedUsers = searchRslts;
+  } else if (isFilterActive) {
+    displayedUsers = filterRslts;
+  }
 
   return (
     <div className="rounded-md border">

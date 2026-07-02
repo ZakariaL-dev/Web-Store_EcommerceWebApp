@@ -34,18 +34,18 @@ const DashProductTable = () => {
   const router = useRouter();
 
   const { products, deleteProduct } = useProductStore();
-  const { searchRslts } = useSearchStore();
+  const { searchRslts, filterRslts } = useSearchStore();
 
-  if (!products) {
-    return (
-      <div className="flex h-32 items-center justify-center text-muted-foreground">
-        Loading products...
-      </div>
-    );
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
+
+  let displayedProducts = products["all"];
+
+  if (isSearchActive) {
+    displayedProducts = searchRslts;
+  } else if (isFilterActive) {
+    displayedProducts = filterRslts;
   }
-
-  const displayedProducts =
-    searchRslts && searchRslts.length > 0 ? searchRslts : products["all"];
 
   const HandleDeleteProduct = async (id) => {
     const { success, message } = await deleteProduct(id);

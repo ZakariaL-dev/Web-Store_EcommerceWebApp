@@ -3,22 +3,23 @@ import connectDB from "@/config/MongoDB";
 
 // Schemas
 import Order from "@/models/OrderSchema";
+import Product from "@/models/ProductSchema";
+import User from "@/models/UserSchema";
 
 // Next
 import { NextResponse } from "next/server";
-
 
 export async function GET() {
   try {
     await connectDB();
     const Orders = await Order.find({})
-      .populate("user", "phoneNumber email")
+      .populate("user", "userName phoneNumber email")
       .populate({
         path: "products.product",
         select: "previewImages",
         model: "Product",
       })
-      .sort({ createdAt: -1 });;
+      .sort({ createdAt: -1 });
 
     return NextResponse.json({ Orders }, { status: 200 });
   } catch (error) {
@@ -61,7 +62,7 @@ export async function POST(request) {
           newOrder,
           message: "Order created. Chargily integration pending.",
         },
-        { status: 201 }
+        { status: 201 },
       );
     }
 

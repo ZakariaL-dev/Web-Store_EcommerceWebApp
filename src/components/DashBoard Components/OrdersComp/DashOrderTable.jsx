@@ -35,15 +35,13 @@ import { HandeResults } from "@/lib/HandeResults";
 
 // Next
 import { useRouter } from "next/navigation";
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashOrderTable = () => {
   const router = useRouter();
 
-  const { orders, getAllOrders, updateOrder } = useOrderStore();
-
-  useEffect(() => {
-    getAllOrders();
-  }, [getAllOrders]);
+  const { orders, updateOrder } = useOrderStore();
+  const { searchRslts, filterRslts } = useSearchStore();
 
   const HandleOrderStatus = (sts) => {
     switch (sts) {
@@ -114,13 +112,17 @@ const DashOrderTable = () => {
     setLoadDialogue(false);
   };
 
-  if (!orders) {
-    return (
-      <div className="lg:w-3/4 w-full flex h-32 items-center justify-center text-muted-foreground">
-        Loading Orders...
-      </div>
-    );
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
+
+  let displayedOrders = orders;
+
+  if (isSearchActive) {
+    displayedOrders = searchRslts;
+  } else if (isFilterActive) {
+    displayedOrders = filterRslts;
   }
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -131,14 +133,14 @@ const DashOrderTable = () => {
             </TableHead>
             <TableHead className="w-[120px]">Grand Total / Pay Via </TableHead>
             <TableHead className="w-[260px]">
-              Phone Number / Delivery Address
+              User infos / Delivery Address
             </TableHead>
             <TableHead className="w-[350px]">Items</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.length > 0 ? (
-            orders.map((o) => {
+          {displayedOrders.length > 0 ? (
+            displayedOrders.map((o) => {
               return (
                 <TableRow key={o._id}>
                   <TableCell>
@@ -152,13 +154,27 @@ const DashOrderTable = () => {
                     >
                       {o.totalAmount} Dz
                     </h1>
-                    <p>By {o.paymentMethod}</p>
+                    <p>
+                      By{" "}
+                      <span className="font-semibold">{o.paymentMethod}</span>
+                    </p>
                     {HandlePaymentStatus(o.paymentStatus)}
                   </TableCell>
                   <TableCell>
-                    <h4>{o.user.phoneNumber.match(/.{1,2}/g).join(" ")}</h4>
+                    <h2>
+                      by{" "}
+                      <span className="font-bold">
+                        {o.user?.userName || "Deleted User"}
+                      </span>
+                    </h2>
+                    <h4>
+                      {o.user?.phoneNumber
+                        ? "+ " + o.user.phoneNumber.match(/.{1,2}/g).join(" ")
+                        : "No Phone"}
+                    </h4>
+                    <h4>{o.user?.email || "No Email"}</h4>
                     <p className="whitespace-normal">
-                      {o.deliveryAddress.address === "" ? (
+                      {o.deliveryAddress.address ? (
                         <>
                           {o.deliveryAddress.bureauAddress}
                           <span className="font-semibold">
@@ -229,7 +245,12 @@ const DashOrderTable = () => {
             })
           ) : (
             <TableRow>
-              <TableCell>No Orders found</TableCell>
+              <TableCell
+                colSpan={4}
+                className="text-center py-4 text-muted-foreground"
+              >
+                No Orders found
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

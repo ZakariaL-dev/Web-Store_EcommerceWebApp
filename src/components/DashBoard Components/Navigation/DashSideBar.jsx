@@ -9,8 +9,10 @@ import { TbReportMoney } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GrConfigure } from "react-icons/gr";
 import { MdOutlineAnalytics } from "react-icons/md";
-import { BsBoxSeam } from "react-icons/bs";
+import { BsBoxSeam, BsExclamation } from "react-icons/bs";
 import { MdOutlineStarOutline } from "react-icons/md";
+import { BsPersonExclamation } from "react-icons/bs";
+import { TbUserExclamation } from "react-icons/tb";
 
 // Shadcn Comp
 import {
@@ -37,8 +39,16 @@ import { ChevronDown } from "lucide-react";
 // React
 import { useState } from "react";
 
+// custom icon
+const BsBoxExclamation = (props) => (
+  <div className="relative inline-block align-middle" {...props}>
+    <BsBoxSeam className="text-gray-700" />
+    <div className="absolute -bottom-1 -right-1.5 w-2 h-3 bg-slate-50"></div>
+    <BsExclamation className="absolute -bottom-1.5 -right-2 w-4 h-4 text-gray-700 " />
+  </div>
+);
 
-// Menu items.
+// Menu items
 const items = [
   {
     title: "Dashboard",
@@ -80,9 +90,16 @@ const items = [
     title: "Reports",
     icon: MdReportGmailerrorred,
     groups: [
-      ["Customers", "/admin/dashboard/reports?r=customers"],
-      ["Products", "/admin/dashboard/reports?r=products"],
-      // ["Store FeedBacks", "/admin/dashboard/reports?r=feedbacks"],
+      {
+        title: "Customers",
+        url: "/admin/dashboard/reports?r=customers",
+        icon: TbUserExclamation,
+      },
+      {
+        title: "Products",
+        url: "/admin/dashboard/reports?r=products",
+        icon: BsBoxExclamation,
+      },
     ],
   },
   {
@@ -139,8 +156,11 @@ const DashSideBar = () => {
                           {item.groups.map((g, i) => (
                             <SidebarMenuItem key={i} className="ml-4">
                               <SidebarMenuButton asChild>
-                                <a href={g[1]}>
-                                  <span>{g[0]}</span>
+                                <a href={g.url}>
+                                  <>
+                                    <g.icon />
+                                    <p>{g.title}</p>
+                                  </>
                                 </a>
                               </SidebarMenuButton>
                             </SidebarMenuItem>

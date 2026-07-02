@@ -13,7 +13,7 @@ const UsersComplain = () => {
   return (
     <>
       <div className="flex items-center justify-between mx-3 mb-4">
-        <h1 className="text-xl font-bold">User Complains</h1>
+        <h1 className="text-xl font-bold">Users Complains</h1>
         <div className="flex gap-3">
           <Button variant="ghost">
             <PiExport />

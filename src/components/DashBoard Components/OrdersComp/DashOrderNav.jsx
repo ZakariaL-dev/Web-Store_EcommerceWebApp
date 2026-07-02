@@ -25,6 +25,8 @@ import { useOrderStore } from "@/utils/OrderStore";
 
 // React
 import { useEffect, useState } from "react";
+import DashFilterSideBar from "../DashFilterSideBar";
+import { useSearchStore } from "@/utils/SearchStore";
 
 const DashOrderNav = () => {
   const { orders, getAllOrders } = useOrderStore();
@@ -33,17 +35,40 @@ const DashOrderNav = () => {
     getAllOrders();
   }, [getAllOrders]);
 
-  //
+  //search system
+  const { getAllSearchRslts, searchRslts, filterRslts, clearSearch, clearAll } =
+    useSearchStore();
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    if (searchValue.trim() !== "") {
+      getAllSearchRslts("orders", searchValue);
+    } else {
+      clearSearch();
+    }
+  }, [searchValue]);
+
+  const isSearching = searchValue && searchValue.trim() !== "" && searchRslts;
+  const isFiltering = filterRslts;
+
+  let TotalNum = orders.length;
+
+  if (isSearching) {
+    TotalNum = searchRslts.length;
+  } else if (isFiltering) {
+    TotalNum = filterRslts.length;
+  }
+
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(orders.length / itemsPerPage) || 1;
+  const totalPages = Math.ceil(TotalNum / itemsPerPage) || 1;
 
   const handleItemsPerPageChange = (e) => {
     const newItemsPerPage = Number(e.target.value);
     setItemsPerPage(newItemsPerPage);
 
-    const nextTotalPages = Math.ceil(orders.length / newItemsPerPage) || 1;
+    const nextTotalPages = Math.ceil(TotalNum / newItemsPerPage) || 1;
 
     if (currentPage > nextTotalPages) {
       setCurrentPage(nextTotalPages);
@@ -61,7 +86,8 @@ const DashOrderNav = () => {
   const handleNext = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
-  //
+  //filter
+  const [filterToggle, setFilterToggle] = useState(false);
 
   if (!orders) {
     return (
@@ -71,62 +97,87 @@ const DashOrderNav = () => {
     );
   }
   return (
-    <div className="flex items-center justify-between mb-3">
-      <div className="max-w-1/3 flex items-center gap-2">
-        <div className="md:flex hidden">
-          <InputGroup>
-            <InputGroupInput placeholder="Search Order" />
-            <InputGroupAddon>
-              <MdSearch />
-            </InputGroupAddon>
-            <InputGroupAddon align="inline-end">
-              {orders.length} results
-            </InputGroupAddon>
-          </InputGroup>
+    <>
+      <div className="flex lg:items-center lg:justify-between mb-3 relative lg:flex-row flex-col gap-3">
+        <div className="lg:max-w-1/3 flex items-center gap-2">
+          <div>
+            <InputGroup>
+              <InputGroupInput
+                placeholder="Search by customer"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <InputGroupAddon>
+                <MdSearch />
+              </InputGroupAddon>
+              <InputGroupAddon align="inline-end">
+                {TotalNum} results
+              </InputGroupAddon>
+            </InputGroup>
+          </div>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() => {
+              getAllOrders();
+              setSearchValue("");
+              clearAll();
+            }}
+          >
+            <RxReload />
+          </Button>
         </div>
-        <Button variant="outline" className="flex items-center gap-2" onClick={getAllOrders}>
-          <RxReload />
-        </Button>
+        <div className="flex items-center gap-2.5">
+          <Button
+            variant="outline"
+            onClick={() => setFilterToggle(!filterToggle)}
+          >
+            <FaFilter />
+            Filters
+          </Button>
+          <NativeSelect
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+          >
+            <NativeSelectOption value="10">10</NativeSelectOption>
+            <NativeSelectOption value="20">20</NativeSelectOption>
+            <NativeSelectOption value="30">30</NativeSelectOption>
+            <NativeSelectOption value="40">40</NativeSelectOption>
+            <NativeSelectOption value="50">50</NativeSelectOption>
+          </NativeSelect>
+          Per page
+          <Input
+            type="number"
+            value={currentPage}
+            onChange={handlePageInputChange}
+            max={totalPages}
+            min={1}
+            className="w-16"
+          />
+          of
+          <Input type="number" value={totalPages} disabled className="w-16" />
+          <Button
+            variant="ghost"
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+          >
+            <IoMdArrowRoundBack />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+          >
+            <IoMdArrowRoundForward />
+          </Button>
+        </div>
       </div>
-      <div className="flex items-center gap-2.5">
-        {/* <Button variant="outline">
-          <FaFilter />
-          Filter
-        </Button> */}
-        <NativeSelect value={itemsPerPage} onChange={handleItemsPerPageChange}>
-          <NativeSelectOption value="10">10</NativeSelectOption>
-          <NativeSelectOption value="20">20</NativeSelectOption>
-          <NativeSelectOption value="30">30</NativeSelectOption>
-          <NativeSelectOption value="40">40</NativeSelectOption>
-          <NativeSelectOption value="50">50</NativeSelectOption>
-        </NativeSelect>
-        <p className="md:block hidden">Per page </p>
-        <Input
-          type="number"
-          value={currentPage}
-          onChange={handlePageInputChange}
-          max={totalPages}
-          min={1}
-          className="w-16"
-        />
-        of
-        <Input type="number" value={totalPages} disabled className="w-16" />
-        <Button
-          variant="ghost"
-          onClick={handlePrev}
-          disabled={currentPage === 1}
-        >
-          <IoMdArrowRoundBack />
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-        >
-          <IoMdArrowRoundForward />
-        </Button>
-      </div>
-    </div>
+      <DashFilterSideBar
+        toggle={filterToggle}
+        setToggle={setFilterToggle}
+        type={"orders"}
+      />
+    </>
   );
 };
 

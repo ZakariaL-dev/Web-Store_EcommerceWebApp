@@ -45,7 +45,18 @@ const ReportsProductsTable = () => {
   const [ReportId, setReportId] = useState(null);
   const [ReportStatus, setReportStatus] = useState(null);
 
-  const { searchRslts } = useSearchStore();
+  const { searchRslts, filterRslts } = useSearchStore();
+
+  const isSearchActive = searchRslts !== null;
+  const isFilterActive = filterRslts !== null;
+
+  let displayedProductReports = ProductReports;
+
+  if (isSearchActive) {
+    displayedProductReports = searchRslts;
+  } else if (isFilterActive) {
+    displayedProductReports = filterRslts;
+  }
 
   const StatusSwitch = (sts) => {
     switch (sts) {
@@ -87,17 +98,6 @@ const ReportsProductsTable = () => {
         return null;
     }
   };
-
-  if (!ProductReports) {
-    return (
-      <div className="flex h-32 items-center justify-center text-muted-foreground">
-        Loading reports...
-      </div>
-    );
-  }
-
-  const displayedProductReports =
-    searchRslts && searchRslts.length > 0 ? searchRslts : ProductReports;
 
   return (
     <div className="rounded-md border">
